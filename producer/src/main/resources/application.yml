@@ -1,0 +1,44 @@
+application:
+  topic: ${TOPIC}
+  partitions: ${PARTITIONS:1}
+  schema: ${SCHEMA}
+  messages: ${MESSAGES}
+  batch.size: ${BATCH_SIZE}
+  frequency.ms: ${FREQUENCY_MS:1000}
+  schemas.path: ${SCHEMAS_PATH:/Users/markchristiansen/repos/github.com/mark-christiansen/micro-kafka/producer/src/main/resources/schemas}
+kafka:
+  producer:
+    client.id: ${CLIENT_ID}
+    # increase for higher throughput
+    batch.size: 1
+    # none for lower latency, lz4 for higher throughput
+    compression.type: lz4
+    # prevent out of order messages when not using an idempotent producer
+    max.in.flight.requests.per.connection: 1
+    # higher for more throughput (ms), 0 for less latency
+    linger.ms: 0
+    # reduce to 1 for lower latency
+    acks: all
+    avro.use.logical.type.converters: true
+    key.serializer: org.apache.kafka.common.serialization.LongSerializer
+    value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    bootstrap.servers: ${BOOTSTRAP_URL}
+    security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT}
+    sasl.mechanism: ${SASL_MECHANISM:PLAIN}
+    sasl.jaas.config: >-
+      org.apache.kafka.common.security.plain.PlainLoginModule required
+      username="${SASL_USERNAME:}"
+      password="${SASL_PASSWORD:}";
+    schema.registry.url: ${SCHEMA_URL}
+    schema.registry.auth: ${SCHEMA_AUTH:false}
+    basic.auth.credentials.source: USER_INFO
+    basic.auth.user.info: ${SCHEMA_USERNAME:}:${SCHEMA_PASSWORD:}
+micronaut:
+  application:
+    name: producer
+  server:
+    port: ${HTTP_PORT:8080}
+netty:
+  default:
+    allocator:
+      max-order: 3

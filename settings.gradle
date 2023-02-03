@@ -1,0 +1,6 @@
+rootProject.name = 'myproject'
+include 'common'
+include 'consumer'
+include 'producer'
+include 'streams'
+

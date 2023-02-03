@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'com.mycompany'
+version '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.mycompany.kafka.streams.Application'
+}
+
+dependencies {
+    implementation project(":common")
+    implementation("io.micronaut.picocli:micronaut-picocli")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.mycompany.*")
+    }
+    testResources {
+        sharedServer = true
+    }
+}

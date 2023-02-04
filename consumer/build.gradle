@@ -13,8 +13,13 @@ dependencies {
     implementation project(":common")
 }
 
-dockerBuild {
+tasks.named("dockerBuildNative") {
     images = ["com.mycompany/kafka-consumer:$project.version"]
+}
+
+tasks.named("dockerfileNative") {
+    args("-Xms500m -Xmx500m")
+    instruction """HEALTHCHECK CMD curl -s localhost:8080/health | grep '"status":"UP"'"""
 }
 
 graalvmNative.toolchainDetection = false

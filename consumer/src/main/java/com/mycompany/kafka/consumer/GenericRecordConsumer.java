@@ -8,6 +8,7 @@ import org.apache.kafka.common.header.Header;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class GenericRecordConsumer extends AbstractGenericRecordConsumer<Long, G
         records.forEach(r -> {
             log.info("Record " + r.key() + " headers:");
             for (Header header : r.headers()) {
-                log.info(header.key() + "=" + new String(header.value()));
+                log.info(header.key() + "=" + new String(header.value(), StandardCharsets.UTF_8));
             }
             Long key = r.key();
             GenericRecord value = r.value();

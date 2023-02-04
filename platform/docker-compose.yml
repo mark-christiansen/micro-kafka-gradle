@@ -173,7 +173,7 @@ services:
   ################## CLIENTS ##################
 
   producer:
-    image: producer:latest
+    image: com.mycompany/kafka-producer:1.0-SNAPSHOT
     hostname: producer
     container_name: producer
     links:
@@ -199,7 +199,7 @@ services:
       - kafka-network
 
   streams:
-    image: streams:latest
+    image: com.mycompany/kafka-streams:1.0-SNAPSHOT
     hostname: streams
     container_name: streams
     links:
@@ -226,7 +226,7 @@ services:
       - kafka-network
 
   consumer:
-    image: consumer:latest
+    image: com.mycompany/kafka-consumer:1.0-SNAPSHOT
     hostname: consumer
     container_name: consumer
     links:

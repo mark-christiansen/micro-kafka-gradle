@@ -1,6 +1,5 @@
-rootProject.name = 'myproject'
+rootProject.name = 'micro-kafka-gradle'
 include 'common'
 include 'consumer'
 include 'producer'
 include 'streams'
-

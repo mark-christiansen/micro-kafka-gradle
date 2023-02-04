@@ -1,33 +1,21 @@
 package com.mycompany.kafka.streams;
 
 import com.mycompany.kafka.common.streams.StreamsLifecycle;
-import io.micronaut.configuration.picocli.PicocliRunner;
+
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.runtime.Micronaut;
-import jakarta.inject.Inject;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
 
-@Command(name = "com/mycompany/kafka/streams", description = "Test Kafka Streams Application",
-        mixinStandardHelpOptions = true)
-public class Application implements Runnable {
+import java.util.Optional;
 
-    @Inject
-    private StreamsLifecycle streamsLifecycle;
-    @Inject
-    private ApplicationContext applicationContext;
+public class Application {
 
-    @Option(names = {"-v", "--verbose"}, description = "...")
-    boolean verbose;
-
-    public static void main(String[] args) throws Exception {
-        ApplicationContext applicationContext = Micronaut.build(args)
-                .mainClass(Application.class)
-                .start();
-        PicocliRunner.run(Application.class, applicationContext, args);
-    }
-
-    public void run() {
-        streamsLifecycle.start();
+    public static void main(String[] args) {
+        try (ApplicationContext ctx = Micronaut.run(Application.class, args)) {
+            Optional<StreamsLifecycle> bean = ctx.findBean(StreamsLifecycle.class);
+            if (bean.isPresent()) {
+                bean.get().start();
+            }
+        }
+        System.exit(0);
     }
 }

@@ -44,6 +44,11 @@ PID=$!
 sleep 5
 kill $PID
 
+java -agentlib:native-image-agent=config-merge-dir=producer/src/main/resources/META-INF/native-image/com.mycompany/producer -cp producer/src/main/resources -jar producer/build/libs/producer-1.0-SNAPSHOT-all.jar
+java -agentlib:native-image-agent=config-merge-dir=streams/src/main/resources/META-INF/native-image/com.mycompany/streams -cp streams/src/main/resources -jar streams/build/libs/streams-1.0-SNAPSHOT-all.jar
+java -agentlib:native-image-agent=config-merge-dir=consumer/src/main/resources/META-INF/native-image/com.mycompany/consumer -cp consumer/src/main/resources -jar consumer/build/libs/consumer-1.0-SNAPSHOT-all.jar
+
+
 echo ""
 echo "build the fat jars for consumer"
 ./gradlew :consumer:assemble
@@ -62,3 +67,5 @@ nohup "${GRAALVM_HOME}"/bin/java \
 PID=$!
 sleep 5
 kill $PID
+
+java -agentlib:native-image-agent=config-merge-dir=streams-stateful/src/main/resources/META-INF/native-image/com.mycompany/streams-stateful -jar streams-stateful/build/libs/streams-stateful-1.0-SNAPSHOT-all.jar

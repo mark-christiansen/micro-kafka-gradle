@@ -1,6 +1,5 @@
 package com.mycompany.kafka.producer;
 
-import com.mycompany.kafka.common.producer.DataGenerator;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.env.Environment;
 import jakarta.inject.Singleton;

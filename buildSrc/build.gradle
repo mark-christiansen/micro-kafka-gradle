@@ -1,0 +1,20 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    gradlePluginPortal() // so that external plugins can be resolved in dependencies section
+}
+
+dependencies {
+    implementation 'com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.12'
+    implementation 'com.github.johnrengelman.shadow:com.github.johnrengelman.shadow.gradle.plugin:7.1.2'
+    implementation 'io.micronaut.gradle:micronaut-gradle-plugin:3.7.0'
+    implementation 'io.micronaut.application:io.micronaut.application.gradle.plugin:3.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

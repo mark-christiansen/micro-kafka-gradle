@@ -125,6 +125,9 @@
   ]
 },
 {
+  "name":"com.ibm.lang.management.OperatingSystemMXBean"
+},
+{
   "name":"com.mycompany.kafka.producer.$Config$DataGenerator1$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -165,16 +168,31 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"com.sun.management.GarbageCollectionNotificationInfo"
+},
+{
   "name":"com.sun.management.GarbageCollectorMXBean",
   "queryAllPublicMethods":true
 },
 {
   "name":"com.sun.management.GcInfo",
-  "queryAllPublicMethods":true
+  "queryAllPublicMethods":true,
+  "fields":[
+    {"name":"builder"}, 
+    {"name":"extAttributes"}
+  ],
+  "methods":[{"name":"getMemoryUsageBeforeGc","parameterTypes":[] }]
 },
 {
   "name":"com.sun.management.HotSpotDiagnosticMXBean",
   "queryAllPublicMethods":true
+},
+{
+  "name":"com.sun.management.OperatingSystemMXBean",
+  "methods":[
+    {"name":"getCpuLoad","parameterTypes":[] }, 
+    {"name":"getProcessCpuLoad","parameterTypes":[] }
+  ]
 },
 {
   "name":"com.sun.management.ThreadMXBean",
@@ -182,7 +200,11 @@
 },
 {
   "name":"com.sun.management.UnixOperatingSystemMXBean",
-  "queryAllPublicMethods":true
+  "queryAllPublicMethods":true,
+  "methods":[
+    {"name":"getMaxFileDescriptorCount","parameterTypes":[] }, 
+    {"name":"getOpenFileDescriptorCount","parameterTypes":[] }
+  ]
 },
 {
   "name":"com.sun.management.VMOption",
@@ -260,6 +282,198 @@
 },
 {
   "name":"io.micronaut.buffer.netty.$NettyByteBufferFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.cache.$JCacheMetricsBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.cache.$MicronautCaffeineCacheMetricsBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.datasource.$DataSourcePoolMetricsBinderFactory$DataSourceMeterBinder0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.datasource.$DataSourcePoolMetricsBinderFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.executor.$ExecutorServiceMetricsBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.grpc.$GrpcMetricsListenerFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.grpc.$GrpcMetricsListenerFactory$GrpcClientMetrics1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.grpc.$GrpcMetricsListenerFactory$GrpcServerMetrics0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.jvm.$JvmMeterRegistryBinderFactory$ClassLoaderMetrics3$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.jvm.$JvmMeterRegistryBinderFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.jvm.$JvmMeterRegistryBinderFactory$JvmGcMetrics0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.jvm.$JvmMeterRegistryBinderFactory$JvmMemoryMetrics1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.jvm.$JvmMeterRegistryBinderFactory$JvmThreadMetrics2$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.logging.$LogbackMeterRegistryBinderFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.logging.$LogbackMeterRegistryBinderFactory$LogbackMetrics0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.netty.$ByteBufAllocatorMetricsBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.netty.$InstrumentedEpollEventLoopGroupFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.netty.$InstrumentedEventLoopTaskQueueFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.netty.$InstrumentedKQueueEventLoopGroupFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.netty.$InstrumentedNioEventLoopGroupFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.netty.$NettyMetricsPipelineBinder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.r2dbc.$R2dbcPoolMetricsBinderFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.r2dbc.$R2dbcPoolMetricsBinderFactory$R2dbcPoolMeterBinder0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.system.$SystemMeterRegistryBinderFactoryFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.system.$SystemMeterRegistryBinderFactoryFactory$FileDescriptorMetrics2$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.system.$SystemMeterRegistryBinderFactoryFactory$ProcessorMetrics1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.system.$SystemMeterRegistryBinderFactoryFactory$UptimeMetrics0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.web.$ClientRequestMetricRegistryFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.web.$HttpMeterFilterFactory$AddClientPercentileMeterFilter1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.web.$HttpMeterFilterFactory$AddServerPercentileMeterFilter0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.web.$HttpMeterFilterFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.binder.web.$ServerRequestMeterRegistryFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.common.tags.$CommonTagsConfigurer$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.management.endpoint.$MetricsEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.$ExportConfigurationProperties$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.$MeterRegistryFactory$CompositeMeterRegistry0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.$MeterRegistryFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.$MeterRegistryFactory$MeterRegistryConfigurer1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.intercept.$CountedInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.intercept.$TimedInterceptor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.logging.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.logging.$LoggingMeterRegistryFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.logging.$LoggingMeterRegistryFactory$LoggingMeterRegistry0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.prometheus.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.prometheus.$PrometheusMeterRegistryFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.prometheus.$PrometheusMeterRegistryFactory$PrometheusConfig0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.metrics.micrometer.prometheus.management.$PrometheusEndpoint$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -933,6 +1147,174 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"io.micronaut.management.endpoint.$BeanConfiguration",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.$EndpointConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.$EndpointDefaultConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.$EndpointSensitivityProcessor$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.$EndpointsFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.beans.$BeansEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.beans.impl.$DefaultBeanDefinitionData$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.beans.impl.$DefaultBeanDefinitionDataCollector$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.env.$EnvironmentEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.health.$HealthEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.health.$HealthEndpoint$StatusConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.health.filter.$HealthResultFilter$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.info.$InfoEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.info.impl.$ReactiveInfoAggregator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.info.source.$BuildInfoSource$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.info.source.$ConfigurationInfoSource$Definition$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.info.source.$ConfigurationInfoSource$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.info.source.$GitInfoSource$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.loggers.$LoggersEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.loggers.impl.$DefaultLoggersManager$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.loggers.impl.$Log4jLoggingSystem$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.loggers.impl.$LogbackLoggingSystem$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.processors.$DeleteEndpointRouteBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.processors.$ReadEndpointRouteBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.processors.$WriteEndpointRouteBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.refresh.$RefreshEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.routes.$RoutesEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.routes.impl.$DefaultRouteData$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.routes.impl.$DefaultRouteDataCollector$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.stop.$ServerStopEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.threads.$ThreadDumpEndpoint$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.endpoint.threads.impl.$DefaultThreadInfoMapper$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.aggregator.$DefaultHealthAggregator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.discovery.$DiscoveryClientHealthIndicator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.discovery.$DiscoveryClientHealthIndicatorConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.diskspace.$DiskSpaceIndicator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.diskspace.$DiskSpaceIndicatorConfiguration$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.jdbc.$JdbcIndicator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.service.$ServiceReadyHealthIndicator$ApplicationEventListener$onServerStarted2$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.service.$ServiceReadyHealthIndicator$ApplicationEventListener$onServiceStarted1$Intercepted$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.indicator.service.$ServiceReadyHealthIndicator$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.management.health.monitor.$HealthMonitorTask$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"io.micronaut.reactive.flow.converters.$FlowConverterRegistrar$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -1287,6 +1669,33 @@
   "fields":[{"name":"producerIndex"}]
 },
 {
+  "name":"io.reactivex.Completable"
+},
+{
+  "name":"io.reactivex.Maybe"
+},
+{
+  "name":"io.reactivex.Observable"
+},
+{
+  "name":"io.reactivex.Single"
+},
+{
+  "name":"io.reactivex.rxjava3.core.Completable"
+},
+{
+  "name":"io.reactivex.rxjava3.core.Flowable"
+},
+{
+  "name":"io.reactivex.rxjava3.core.Maybe"
+},
+{
+  "name":"io.reactivex.rxjava3.core.Observable"
+},
+{
+  "name":"io.reactivex.rxjava3.core.Single"
+},
+{
   "name":"java.io.FilePermission"
 },
 {
@@ -1384,7 +1793,8 @@
 },
 {
   "name":"java.lang.management.MemoryUsage",
-  "queryAllPublicMethods":true
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"from","parameterTypes":["javax.management.openmbean.CompositeData"] }]
 },
 {
   "name":"java.lang.management.MonitorInfo",
@@ -1545,6 +1955,9 @@
   "name":"jdk.management.jfr.SettingDescriptorInfo",
   "queryAllPublicMethods":true
 },
+{
+  "name":"kotlinx.coroutines.flow.Flow"
+},
   {
     "name":"net.jpountz.lz4.LZ4HCJNICompressor",
     "fields":[{"name":"INSTANCE"}],
@@ -1642,6 +2055,12 @@
 {
   "name":"org.apache.kafka.common.utils.AppInfoParser$AppInfoMBean",
   "queryAllPublicMethods":true
+},
+{
+  "name":"reactor.core.publisher.Flux"
+},
+{
+  "name":"reactor.core.publisher.Mono"
 },
 {
   "name":"sun.management.ClassLoadingImpl",

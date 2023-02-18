@@ -4,8 +4,8 @@ application:
   failure.output.topic: ${ERROR_TOPIC}
   state.store.cleanup: ${STATE_STORE_CLEANUP:false}
   in.memory.state.stores: ${IN_MEMORY_STATE:true}
-  stream.type: ${STREAM_TYPE:stateless}
 kafka:
+  health.streams.enabled: true
   producer:
     application.id: ${APP_ID}-errors
     key.serializer: org.apache.kafka.common.serialization.LongSerializer
@@ -67,9 +67,29 @@ kafka:
     #value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
     topology.optimization: all
     auto.register.schemas: true
+    rocksdb.config.setter: "com.mycompany.kafka.streams.RocksDBConfig"
+    metric.reporters: "io.micronaut.configuration.kafka.streams.metrics.KafkaStreamsMetricsReporter"
+endpoints:
+  # exposes deeper details of the health of the streams app (per task/thread)
+  health:
+    details-visible: ANONYMOUS
+  prometheus:
+    sensitive: false
 micronaut:
   application:
     name: streams
+  metrics:
+    enabled: true
+    binders:
+      kafka:
+        enabled: true
+        streams:
+          enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
   server:
     port: ${HTTP_PORT:8080}
 netty:

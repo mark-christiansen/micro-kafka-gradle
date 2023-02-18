@@ -1,0 +1,10 @@
+plugins {
+    id('micro-kafka-gradle.micronaut-library')
+}
+
+group 'com.mycompany'
+version '1.0-SNAPSHOT'
+
+dependencies {
+    implementation("org.apache.avro:avro:${avroVersion}")
+}

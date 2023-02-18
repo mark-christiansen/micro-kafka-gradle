@@ -1,0 +1,8 @@
+plugins {
+    id('micro-kafka-gradle.micronaut-application')
+}
+
+dependencies {
+    implementation("io.confluent:kafka-avro-serializer:${confluentVersion}")
+    implementation("org.apache.avro:avro:${avroVersion}")
+}

@@ -1,7 +1,6 @@
 package com.mycompany.kafka.producer;
 
-import com.mycompany.kafka.common.producer.DataGenerator;
-import com.mycompany.kafka.common.producer.SchemaLoader;
+import com.mycompany.kafka.schemas.SchemaLoader;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.annotation.Property;
 import jakarta.inject.Singleton;

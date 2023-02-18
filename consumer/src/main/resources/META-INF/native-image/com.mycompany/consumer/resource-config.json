@@ -2,9 +2,6 @@
   "resources":{
   "includes":[
     {
-      "pattern":"\\QMETA-INF/micronaut/io.micronaut.core.beans.BeanIntrospectionReference\\E"
-    }, 
-    {
       "pattern":"\\QMETA-INF/micronaut/io.micronaut.inject.BeanConfiguration\\E"
     }, 
     {
@@ -18,6 +15,9 @@
     }, 
     {
       "pattern":"\\QMETA-INF/services/io.micronaut.core.convert.TypeConverterRegistrar\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/io.micronaut.core.type.TypeInformationProvider\\E"
     }, 
     {
       "pattern":"\\QMETA-INF/services/java.nio.file.spi.FileSystemProvider\\E"

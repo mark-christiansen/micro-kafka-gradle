@@ -184,19 +184,24 @@ services:
     ports:
       - "8800:8080"
     environment:
-      BOOTSTRAP_URL: kafka1:29092
-      SCHEMA_URL: http://schema1:8081
-      CLIENT_ID: kafka-producer
-      TOPIC: customer
-      SCHEMA: customer
-      MESSAGES: 100
       BATCH_SIZE: 1
+      BOOTSTRAP_URL: kafka1:29092
+      CLIENT_ID: kafka-producer
       FREQUENCY_MS: 1000
+      MESSAGES: 100
+      SCHEMA: customer
+      SCHEMA_URL: http://schema1:8081
       SCHEMAS_PATH: /schemas
+      TOPIC: customer
     volumes:
       - ./volumes/producer/schemas:/schemas
     networks:
       - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   streams:
     image: com.mycompany/kafka-streams:1.0-SNAPSHOT
@@ -210,20 +215,27 @@ services:
     ports:
       - "8801:8080"
     environment:
+      APP_ID: customer-transformer
       BOOTSTRAP_URL: kafka1:29092
-      SCHEMA_URL: http://schema1:8081
-      APP_ID: kafka-streams
-      GROUP_ID: kafka-streams
+      ERROR_TOPIC: customer.error
+      GROUP_ID: customer-transformer
+      IN_MEMORY_STATE: false
       INPUT_TOPIC: customer
       OUTPUT_TOPIC: customer.transformed
-      ERROR_TOPIC: customer.error
-      IN_MEMORY_STATE: false
-      STREAM_TYPE: stateless
-      STATE_DIR: /kafka-streams/data
+      ROCKSDB_SHAREDLIB_DIR: /rocksdb
+      SCHEMA_URL: http://schema1:8081
+      STREAM_TYPE: stateful
+      STATE_DIR: /kstreams
     volumes:
-      - ./volumes/kafka-streams:/kafka-streams/data
+      - ./volumes/kstream-1/data:/kstreams
+      - ./volumes/kstream-1/rocksjnilib:/rocksdb
     networks:
       - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   consumer:
     image: com.mycompany/kafka-consumer:1.0-SNAPSHOT
@@ -238,13 +250,84 @@ services:
       - "8802:8080"
     environment:
       BOOTSTRAP_URL: kafka1:29092
-      SCHEMA_URL: http://schema1:8081
       CLIENT_ID: kafka-consumer
+      COMMIT_TIMEOUT_SECS: 5
       GROUP_ID: kafka-consumer
-      TOPIC: customer.transformed
       OFFSET_DAYS: 1
       POLL_TIMEOUT_SECS: 5
-      COMMIT_TIMEOUT_SECS: 5
+      SCHEMA_URL: http://schema1:8081
+      TOPIC: customer.transformed
+    networks:
+      - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
+  ################## MONITORING ##################
+
+  redis:
+    image: redis:latest
+    hostname: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - kafka-network
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    hostname: cadvisor
+    container_name: cadvisor
+    depends_on:
+      - redis
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - kafka-network
+
+  prometheus:
+    image: ubuntu/prometheus
+    hostname: prometheus
+    container_name: prometheus
+    depends_on:
+      - cadvisor
+    ports:
+      - "9090:9090/tcp"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./volumes/prometheus:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - kafka-network
+
+  grafana:
+    image: grafana/grafana
+    hostname: grafana
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    environment:
+      DOMAIN: ${DOMAIN}
+      # Disable login for Grafana
+      GF_AUTH_DISABLE_LOGIN_FORM: 'true'
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: 'Admin'
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+    volumes:
+      - ./volumes/grafana/data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/dashboards:/etc/grafana/dashboards
     networks:
       - kafka-network
 

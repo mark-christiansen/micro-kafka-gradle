@@ -1,0 +1,29 @@
+plugins {
+    id('checkstyle')
+    id('com.github.spotbugs')
+    id('java')
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://packages.confluent.io/maven/"
+    }
+}
+
+dependencies {
+    implementation 'com.google.code.findbugs:annotations:3.0.1'
+}
+
+checkstyle {
+    configFile = rootProject.file('checkstyle.xml')
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+test {
+    useJUnitPlatform()
+}

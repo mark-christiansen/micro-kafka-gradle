@@ -1,0 +1,14 @@
+plugins {
+    id('micro-kafka-gradle.micronaut-application')
+}
+
+dependencies {
+
+    implementation project(":common-streams")
+    implementation("org.apache.avro:avro:${avroVersion}")
+    implementation("org.apache.kafka:kafka-streams:${kafkaVersion}")
+    implementation("io.confluent:kafka-streams-avro-serde:${confluentVersion}")
+
+    testImplementation project(":common-streams-test")
+    testImplementation("org.apache.kafka:kafka-streams-test-utils:${kafkaVersion}")
+}

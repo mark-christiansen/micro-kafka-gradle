@@ -1,0 +1,46 @@
+{
+  "type": "record",
+  "name": "AccountContact",
+  "namespace": "com.mycompany.kafka.model",
+  "fields":
+  [
+    {
+      "name": "id",
+      "type": "long"
+    },
+    {
+      "name": "accountId",
+      "type": "long"
+    },
+    {
+      "name": "contactId",
+      "type": "long"
+    },
+    {
+      "name": "contactRoleId",
+      "type": "long"
+    },
+    {
+      "name": "created",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "updated",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "default": null
+    }
+  ]
+}

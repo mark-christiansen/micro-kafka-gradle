@@ -1,6 +1,5 @@
 package com.mycompany.kafka.consumer;
 
-import com.mycompany.kafka.common.consumer.AbstractGenericRecordConsumer;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

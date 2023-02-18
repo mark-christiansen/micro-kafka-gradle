@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id('micro-kafka-gradle.micronaut-kstream')
 }
 
 group 'com.mycompany'
@@ -10,7 +10,7 @@ application {
 }
 
 dependencies {
-    implementation project(":common")
+    testImplementation project(":common-streams-test")
 }
 
 tasks.named("dockerBuildNative") {
@@ -18,8 +18,9 @@ tasks.named("dockerBuildNative") {
 }
 
 tasks.named("dockerfileNative") {
+    baseImage('com.mycompany/debian:bookworm-slim')
     args("-Xms500m", "-Xmx500m")
-    instruction """HEALTHCHECK CMD curl -s localhost:8080/health | grep '"status":"UP"'"""
+    instruction """HEALTHCHECK CMD wget -q -O - http://localhost:8080/health | grep -e '"status":"UP"'"""
 }
 
 graalvmNative.toolchainDetection = false
@@ -29,8 +30,5 @@ micronaut {
     processing {
         incremental(true)
         annotations("com.mycompany.*")
-    }
-    testResources {
-        sharedServer = true
     }
 }

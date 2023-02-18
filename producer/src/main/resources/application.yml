@@ -36,6 +36,8 @@ kafka:
 micronaut:
   application:
     name: producer
+  metrics:
+    enabled: true
   server:
     port: ${HTTP_PORT:8080}
 netty:

@@ -1,5 +1,8 @@
 rootProject.name = 'micro-kafka-gradle'
-include 'common'
 include 'consumer'
 include 'producer'
 include 'streams'
+include 'common-streams'
+include 'common-streams-test'
+include 'common-schemas'
+

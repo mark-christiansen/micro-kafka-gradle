@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id('micro-kafka-gradle.micronaut-kafka')
 }
 
 group 'com.mycompany'
@@ -9,17 +9,14 @@ application {
     mainClass = 'com.mycompany.kafka.consumer.Application'
 }
 
-dependencies {
-    implementation project(":common")
-}
-
 tasks.named("dockerBuildNative") {
     images = ["com.mycompany/kafka-consumer:$project.version"]
 }
 
 tasks.named("dockerfileNative") {
     args("-Xms500m", "-Xmx500m")
-    instruction """HEALTHCHECK CMD curl -s localhost:8080/health | grep '"status":"UP"'"""
+    args("-Xms500m", "-Xmx500m")
+    instruction """HEALTHCHECK CMD wget -q -O - http://localhost:8080/health | grep -e '"status":"UP"'"""
 }
 
 graalvmNative.toolchainDetection = false
@@ -29,8 +26,5 @@ micronaut {
     processing {
         incremental(true)
         annotations("com.mycompany.*")
-    }
-    testResources {
-        sharedServer = true
     }
 }

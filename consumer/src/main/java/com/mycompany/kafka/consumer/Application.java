@@ -1,7 +1,5 @@
 package com.mycompany.kafka.consumer;
 
-import com.mycompany.kafka.common.consumer.AbstractGenericRecordConsumer;
-
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.runtime.Micronaut;
 

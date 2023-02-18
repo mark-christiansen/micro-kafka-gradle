@@ -36,8 +36,10 @@ kafka:
 micronaut:
   application:
     name: consumer
+  metrics:
+    enabled: true
   server:
-    port:${HTTP_PORT:8080}
+    port: ${HTTP_PORT:8080}
 netty:
   default:
     allocator:

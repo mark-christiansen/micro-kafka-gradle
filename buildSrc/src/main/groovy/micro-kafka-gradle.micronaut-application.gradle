@@ -1,0 +1,27 @@
+plugins {
+    id('com.github.johnrengelman.shadow')
+    id("io.micronaut.application")
+    id('micro-kafka-gradle.java')
+}
+
+dependencies {
+
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-core")
+    // micrometer-registry-prometheus also pulls in micrometer-core so included above to verbose example
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
+    // Also required to enable endpoint
+    implementation("io.micronaut:micronaut-management")
+
+    annotationProcessor("io.micronaut:micronaut-graal")
+    compileOnly("org.graalvm.nativeimage:svm")
+
+    runtimeOnly("ch.qos.logback:logback-classic")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}

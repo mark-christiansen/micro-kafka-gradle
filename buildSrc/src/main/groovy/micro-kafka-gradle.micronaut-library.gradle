@@ -1,0 +1,15 @@
+plugins {
+    id("io.micronaut.library")
+    id('java-library')
+    id('maven-publish')
+    id('micro-kafka-gradle.java')
+}
+
+/*
+def readmeCheck = tasks.register('readmeCheck', com.example.ReadmeVerificationTask) {
+    // Expect the README in the project directory
+    readme = layout.projectDirectory.file("README.md")
+    // README must contain a Service API header
+    readmePatterns = ['^## API$', '^## Changelog$']
+}
+*/

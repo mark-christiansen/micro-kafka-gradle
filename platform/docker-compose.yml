@@ -172,98 +172,98 @@ services:
 
   ################## CLIENTS ##################
 
-  producer:
-    image: com.mycompany/kafka-producer:1.0-SNAPSHOT
-    hostname: producer
-    container_name: producer
-    links:
-      - schema1
-    depends_on:
-      schema1:
-        condition: service_healthy
-    ports:
-      - "8800:8080"
-    environment:
-      BATCH_SIZE: 1
-      BOOTSTRAP_URL: kafka1:29092
-      CLIENT_ID: kafka-producer
-      FREQUENCY_MS: 1000
-      MESSAGES: 100
-      SCHEMA: customer
-      SCHEMA_URL: http://schema1:8081
-      SCHEMAS_PATH: /schemas
-      TOPIC: customer
-    volumes:
-      - ./volumes/producer/schemas:/schemas
-    networks:
-      - kafka-network
-    healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
-      interval: 2s
-      timeout: 10s
-      retries: 10
-
-  streams:
-    image: com.mycompany/kafka-streams:1.0-SNAPSHOT
-    hostname: streams
-    container_name: streams
-    links:
-      - schema1
-    depends_on:
-      schema1:
-        condition: service_healthy
-    ports:
-      - "8801:8080"
-    environment:
-      APP_ID: customer-transformer
-      BOOTSTRAP_URL: kafka1:29092
-      ERROR_TOPIC: customer.error
-      GROUP_ID: customer-transformer
-      IN_MEMORY_STATE: false
-      INPUT_TOPIC: customer
-      OUTPUT_TOPIC: customer.transformed
-      ROCKSDB_SHAREDLIB_DIR: /rocksdb
-      SCHEMA_URL: http://schema1:8081
-      STREAM_TYPE: stateful
-      STATE_DIR: /kstreams
-    volumes:
-      - ./volumes/kstream-1/data:/kstreams
-      - ./volumes/kstream-1/rocksjnilib:/rocksdb
-    networks:
-      - kafka-network
-    healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
-      interval: 2s
-      timeout: 10s
-      retries: 10
-
-  consumer:
-    image: com.mycompany/kafka-consumer:1.0-SNAPSHOT
-    hostname: consumer
-    container_name: consumer
-    links:
-      - schema1
-    depends_on:
-      schema1:
-        condition: service_healthy
-    ports:
-      - "8802:8080"
-    environment:
-      BOOTSTRAP_URL: kafka1:29092
-      CLIENT_ID: kafka-consumer
-      COMMIT_TIMEOUT_SECS: 5
-      GROUP_ID: kafka-consumer
-      OFFSET_DAYS: 1
-      POLL_TIMEOUT_SECS: 5
-      SCHEMA_URL: http://schema1:8081
-      TOPIC: customer.transformed
-    networks:
-      - kafka-network
-    healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
-      interval: 2s
-      timeout: 10s
-      retries: 10
+#  producer:
+#    image: com.mycompany/kafka-producer:1.0-SNAPSHOT
+#    hostname: producer
+#    container_name: producer
+#    links:
+#      - schema1
+#    depends_on:
+#      schema1:
+#        condition: service_healthy
+#    ports:
+#      - "8800:8080"
+#    environment:
+#      BATCH_SIZE: 1
+#      BOOTSTRAP_URL: kafka1:29092
+#      CLIENT_ID: kafka-producer
+#      FREQUENCY_MS: 1000
+#      MESSAGES: 100
+#      SCHEMA: customer
+#      SCHEMA_URL: http://schema1:8081
+#      SCHEMAS_PATH: /schemas
+#      TOPIC: customer
+#    volumes:
+#      - ./volumes/producer/schemas:/schemas
+#    networks:
+#      - kafka-network
+#    healthcheck:
+#      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+#      interval: 2s
+#      timeout: 10s
+#      retries: 10
+#
+#  streams:
+#    image: com.mycompany/kafka-streams:1.0-SNAPSHOT
+#    hostname: streams
+#    container_name: streams
+#    links:
+#      - schema1
+#    depends_on:
+#      schema1:
+#        condition: service_healthy
+#    ports:
+#      - "8801:8080"
+#    environment:
+#      APP_ID: customer-transformer
+#      BOOTSTRAP_URL: kafka1:29092
+#      ERROR_TOPIC: customer.error
+#      GROUP_ID: customer-transformer
+#      IN_MEMORY_STATE: false
+#      INPUT_TOPIC: customer
+#      OUTPUT_TOPIC: customer.transformed
+#      ROCKSDB_SHAREDLIB_DIR: /rocksdb
+#      SCHEMA_URL: http://schema1:8081
+#      STREAM_TYPE: stateful
+#      STATE_DIR: /kstreams
+#    volumes:
+#      - ./volumes/kstream-1/data:/kstreams
+#      - ./volumes/kstream-1/rocksjnilib:/rocksdb
+#    networks:
+#      - kafka-network
+#    healthcheck:
+#      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+#      interval: 2s
+#      timeout: 10s
+#      retries: 10
+#
+#  consumer:
+#    image: com.mycompany/kafka-consumer:1.0-SNAPSHOT
+#    hostname: consumer
+#    container_name: consumer
+#    links:
+#      - schema1
+#    depends_on:
+#      schema1:
+#        condition: service_healthy
+#    ports:
+#      - "8802:8080"
+#    environment:
+#      BOOTSTRAP_URL: kafka1:29092
+#      CLIENT_ID: kafka-consumer
+#      COMMIT_TIMEOUT_SECS: 5
+#      GROUP_ID: kafka-consumer
+#      OFFSET_DAYS: 1
+#      POLL_TIMEOUT_SECS: 5
+#      SCHEMA_URL: http://schema1:8081
+#      TOPIC: customer.transformed
+#    networks:
+#      - kafka-network
+#    healthcheck:
+#      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+#      interval: 2s
+#      timeout: 10s
+#      retries: 10
 
   ################## MONITORING ##################
 

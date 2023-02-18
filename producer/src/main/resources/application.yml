@@ -22,6 +22,8 @@ kafka:
     avro.use.logical.type.converters: true
     key.serializer: org.apache.kafka.common.serialization.LongSerializer
     value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    key.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
+    value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
     bootstrap.servers: ${BOOTSTRAP_URL}
     security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT}
     sasl.mechanism: ${SASL_MECHANISM:PLAIN}

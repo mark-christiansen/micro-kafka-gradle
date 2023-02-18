@@ -52,12 +52,12 @@ public class StreamTest extends TopologyTest {
                     "output", outputSerdes.key.deserializer(), outputSerdes.value.deserializer());
 
             TestDataHelper dataHelper = new TestDataHelper("schemas");
-            KeyValue<Long, GenericRecord> in = dataHelper.createCustomer();
+            KeyValue<Long, GenericRecord> in = dataHelper.createContact();
             inputTopic.pipeInput(in.key, in.value);
             TestRecord<Long, GenericRecord> out = outputTopic.readRecord();
 
-            dataHelper.verifyCustomerKey(in.key, out.key());
-            dataHelper.verifyCustomerValue(in.value, out.value());
+            dataHelper.verifyKey(in.key, out.key());
+            dataHelper.verifyContactValue(in.value, out.value());
         }
     }
 

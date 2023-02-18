@@ -81,6 +81,7 @@ public class SchemaLoader {
         // order of the schema files alphabetically
         paths.sort(Comparator.comparing(Objects::requireNonNull));
 
+        Schema.Parser parser = new Schema.Parser();
         for (String path : paths) {
 
             log.info("Loading path {}", path);
@@ -95,7 +96,7 @@ public class SchemaLoader {
                 }
 
                 log.info("Loading schema from file {}", file.getName());
-                Schema schema = new Schema.Parser().parse(sb.toString());
+                Schema schema = parser.parse(sb.toString());
                 log.info("Schema {} loaded", schema.getName().toLowerCase());
                 schemas.put(schema.getName().toLowerCase(), schema);
             }

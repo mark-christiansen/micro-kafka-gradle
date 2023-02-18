@@ -33,6 +33,25 @@
       "default": null
     },
     {
+      "name": "ssn",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "birthDate",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    },
+    {
       "name": "created",
       "type": [
         "null",

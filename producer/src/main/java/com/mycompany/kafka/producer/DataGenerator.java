@@ -113,6 +113,8 @@ public class DataGenerator {
                             record.put(f.name(), faker.address().fullAddress());
                         } else if (f.name().equalsIgnoreCase("FIRSTNAME")) {
                             record.put(f.name(), faker.name().firstName());
+                        } else if (f.name().equalsIgnoreCase("MIDDLENAME")) {
+                            record.put(f.name(), faker.name().firstName());
                         } else if (f.name().equalsIgnoreCase("LASTNAME")) {
                             record.put(f.name(), faker.name().lastName());
                         } else if (f.name().toUpperCase().contains("NAME")) {

@@ -8,3 +8,5 @@ find volumes/kafka-1 -mindepth 1 -delete
 find volumes/postgres -mindepth 1 -delete
 find volumes/zoo-1 -mindepth 1 -delete
 find volumes/kstream-1 -mindepth 1 -delete
+find volumes/grafana -mindepth 1 -delete
+find volumes/prometheus -mindepth 1 -delete

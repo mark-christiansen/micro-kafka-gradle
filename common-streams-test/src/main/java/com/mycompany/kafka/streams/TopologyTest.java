@@ -1,12 +1,10 @@
 package com.mycompany.kafka.streams;
 
+import com.mycompany.kafka.streams.serdes.Serdes;
 import io.confluent.kafka.schemaregistry.client.MockSchemaRegistryClient;
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
-import org.apache.avro.generic.GenericRecord;
-import org.apache.kafka.clients.producer.MockProducer;
-import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.streams.StreamsConfig;
 
 import java.util.HashMap;
@@ -18,7 +16,7 @@ public abstract class TopologyTest {
     protected final Properties kafkaConfig = new Properties();
     protected final Map<String, Object> schemaRegistryConfig = new HashMap<>();
     protected final SchemaRegistryClient schemaRegistryClient = new MockSchemaRegistryClient();
-    protected com.mycompany.kafka.streams.Serdes serdes;
+    protected Serdes serdes;
 
     public void setup() {
 
@@ -30,6 +28,6 @@ public abstract class TopologyTest {
         schemaRegistryConfig.put("schema.cache.capacity", 2000);
         schemaRegistryConfig.put(KafkaAvroDeserializerConfig.AUTO_REGISTER_SCHEMAS, true);
 
-        serdes = new com.mycompany.kafka.streams.Serdes(schemaRegistryClient, schemaRegistryConfig);
+        serdes = new Serdes(schemaRegistryClient, schemaRegistryConfig);
     }
 }

@@ -5,4 +5,8 @@ include 'streams'
 include 'common-streams'
 include 'common-streams-test'
 include 'common-schemas'
+include 'contact-address-stream'
+include 'contact-stream'
+include 'account-stream'
+include 'account-contact-stream'
 

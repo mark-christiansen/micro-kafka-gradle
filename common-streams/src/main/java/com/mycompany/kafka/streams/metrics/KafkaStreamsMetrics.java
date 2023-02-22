@@ -1,6 +1,5 @@
 package com.mycompany.kafka.streams.metrics;
 
-import com.mycompany.kafka.streams.KafkaStreamConfiguration;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micronaut.configuration.kafka.metrics.AbstractKafkaMetrics;
 import io.micronaut.configuration.kafka.streams.metrics.KafkaStreamsMetricsReporter;

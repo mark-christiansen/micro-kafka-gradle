@@ -1,12 +1,33 @@
 application:
-  topic: ${TOPIC}
+  account.topic: ${ACCOUNT_TOPIC}
+  account.contact.topic: ${ACCOUNT_CONTACT_TOPIC}
+  contact.topic: ${CONTACT_TOPIC}
+  contact.address.topic: ${CONTACT_ADDRESS_TOPIC}
+  contact.role.topic: ${CONTACT_ROLE_TOPIC}
+  state.topic: ${STATE_TOPIC}
+  country.topic: ${COUNTRY_TOPIC}
+  canonical.account.topic: ${CANONICAL_ACCOUNT_TOPIC}
+  canonical.account.contact.topic: ${CANONICAL_ACCOUNT_CONTACT_TOPIC}
+  canonical.contact.topic: ${CANONICAL_CONTACT_TOPIC}
+  canonical.contact.address.topic: ${CANONICAL_CONTACT_ADDRESS_TOPIC}
   partitions: ${PARTITIONS:1}
-  schema: ${SCHEMA}
-  messages: ${MESSAGES}
+  accounts: ${ACCOUNTS}
+  contacts.per.account: ${CONTACTS_PER_ACCOUNT:3}
+  addresses.per.contact: ${ADDRESSES_PER_CONTACT:2}
   batch.size: ${BATCH_SIZE}
   frequency.ms: ${FREQUENCY_MS:1000}
-  schemas.path: ${SCHEMAS_PATH:/Users/markchristiansen/repos/github.com/mark-christiansen/micro-kafka/producer/src/main/resources/schemas}
+  schemas.path: ${SCHEMAS_PATH:schemas/source}
+  threads: ${THREADS:5}
 kafka:
+  admin:
+    client.id: ${CLIENT_ID}-admin
+    bootstrap.servers: ${BOOTSTRAP_URL}
+    security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT}
+    sasl.mechanism: ${SASL_MECHANISM:PLAIN}
+    sasl.jaas.config: >-
+      org.apache.kafka.common.security.plain.PlainLoginModule required
+      username="${SASL_USERNAME:}"
+      password="${SASL_PASSWORD:}";
   producer:
     client.id: ${CLIENT_ID}
     # increase for higher throughput

@@ -1,0 +1,99 @@
+application:
+  contact.topic: ${CONTACT_TOPIC}
+  contact.address.topic: ${CONTACT_ADDRESS_TOPIC}
+  output.topic: ${OUTPUT_TOPIC}
+  failure.output.topic: ${ERROR_TOPIC}
+  state.store.cleanup: ${STATE_STORE_CLEANUP:false}
+  in.memory.state.stores: ${IN_MEMORY_STATE:true}
+kafka:
+  health.streams.enabled: true
+  producer:
+    application.id: ${APP_ID}-errors
+    key.serializer: org.apache.kafka.common.serialization.LongSerializer
+    value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    bootstrap.servers: ${BOOTSTRAP_URL}
+    security.protocol:  ${SECURITY_PROTOCOL:PLAINTEXT}
+    sasl.mechanism: ${SASL_MECHANISM:PLAIN}
+    sasl.jaas.config: >-
+      org.apache.kafka.common.security.plain.PlainLoginModule required
+      username="${SASL_USERNAME:}"
+      password="${SASL_PASSWORD:}";
+    schema.registry.url: ${SCHEMA_URL}
+    schema.registry.auth: ${SCHEMA_AUTH:false}
+    basic.auth.credentials.source: USER_INFO
+    basic.auth.user.info: ${SCHEMA_USERNAME:}:${SCHEMA_PASSWORD:}
+  streams:
+    application.id: ${APP_ID}
+    group.id: ${GROUP_ID}
+    acks: all
+    auto.reset.offset: earliest
+    # broker connection configuration
+    bootstrap.servers: ${BOOTSTRAP_URL}
+    security.protocol:  ${SECURITY_PROTOCOL:PLAINTEXT}
+    sasl.mechanism: ${SASL_MECHANISM:PLAIN}
+    sasl.jaas.config: >-
+      org.apache.kafka.common.security.plain.PlainLoginModule required
+      username="${SASL_USERNAME:}"
+      password="${SASL_PASSWORD:}";
+    default.key.serde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
+    default.value.serde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
+    default.timestamp.extractor: org.apache.kafka.streams.processor.WallclockTimestampExtractor
+    default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndFailExceptionHandler
+    default.production.exception.handler: org.apache.kafka.streams.errors.DefaultProductionExceptionHandler
+    # for changelog topics and repartition topics, match other topics to guarantee fault tolerance
+    replication.factor: -1
+    request.timeout.ms: 60000
+    session.timeout.ms: 30000
+    #isolation.level: read_committed
+    #processing.guarantee: exactly_once_beta
+    retries: 2147483647
+    enabled.idempotence: true
+    max.in.flight.requests.per.connection: 1
+    buffered.records.per.partition: 1000
+    commit.interval.ms: 5000
+    num.stream.threads: 1
+    poll.ms: 100
+    cache.max.bytes.buffering: 10485760
+    # state store configuration
+    state.dir: ${STATE_DIR:/tmp/kstreams}
+    num.standby.replicas: 0
+    min.insync.replicas: 0
+    # schema registry configuration
+    schema.registry.url: ${SCHEMA_URL}
+    schema.registry.auth: ${SCHEMA_AUTH:false}
+    schema.cache.capacity: 2000
+    basic.auth.credentials.source: USER_INFO
+    basic.auth.user.info: ${SCHEMA_USERNAME:}:${SCHEMA_PASSWORD:}
+    #key.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
+    #value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
+    topology.optimization: all
+    auto.register.schemas: true
+    rocksdb.config.setter: "com.mycompany.kafka.streams.RocksDBConfig"
+    metric.reporters: "io.micronaut.configuration.kafka.streams.metrics.KafkaStreamsMetricsReporter"
+endpoints:
+  # exposes deeper details of the health of the streams app (per task/thread)
+  health:
+    details-visible: ANONYMOUS
+  prometheus:
+    sensitive: false
+micronaut:
+  application:
+    name: contact-stream
+  metrics:
+    enabled: true
+    binders:
+      kafka:
+        enabled: true
+        streams:
+          enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
+  server:
+    port: ${HTTP_PORT:8080}
+netty:
+  default:
+    allocator:
+      max-order: 3

@@ -1,5 +1,8 @@
+import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
+
 plugins {
     id('micro-kafka-gradle.micronaut-library')
+    id "com.github.davidmc24.gradle.plugin.avro" version "1.6.0"
 }
 
 group 'com.mycompany'
@@ -7,4 +10,13 @@ version '1.0-SNAPSHOT'
 
 dependencies {
     implementation("org.apache.avro:avro:${avroVersion}")
+}
+
+def generateAvro = tasks.register("generateAvro", GenerateAvroJavaTask) {
+    source("src/main/resources/schemas/canonical")
+    outputDir = file("src/main/java")
+}
+
+tasks.named("compileJava").configure {
+    source(generateAvro)
 }

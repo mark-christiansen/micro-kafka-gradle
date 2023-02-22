@@ -1,0 +1,30 @@
+plugins {
+    id('micro-kafka-gradle.micronaut-kstream')
+}
+
+group 'com.mycompany'
+version '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.mycompany.kafka.streams.accountcontact.Application'
+}
+
+tasks.named("dockerBuildNative") {
+    images = ["com.mycompany/account-contact-stream:$project.version"]
+}
+
+tasks.named("dockerfileNative") {
+    baseImage('com.mycompany/debian:bookworm-slim')
+    args("-Xms500m", "-Xmx500m")
+    instruction """HEALTHCHECK CMD wget -q -O - http://localhost:8080/health | grep -e '"status":"UP"'"""
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.mycompany.*")
+    }
+}

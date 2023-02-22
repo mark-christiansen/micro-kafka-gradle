@@ -184,15 +184,24 @@ services:
 #    ports:
 #      - "8800:8080"
 #    environment:
-#      BATCH_SIZE: 1
+#      ACCOUNT_CONTACT_TOPIC: source.accountcontact
+#      ACCOUNT_TOPIC: source.account
+#      ACCOUNTS: 100000
+#      ADDRESSES_PER_CONTACT: 2
+#      BATCH_SIZE: 100
 #      BOOTSTRAP_URL: kafka1:29092
-#      CLIENT_ID: kafka-producer
-#      FREQUENCY_MS: 1000
-#      MESSAGES: 100
-#      SCHEMA: customer
+#      CLIENT_ID: producer
+#      CONTACT_ADDRESS_TOPIC: source.contactaddress
+#      CONTACT_ROLE_TOPIC: source.contactrole
+#      CONTACT_TOPIC: source.contact
+#      CONTACTS_PER_ACCOUNT: 3
+#      COUNTRY_TOPIC: source.country
+#      FREQUENCY_MS: 100
+#      PARTITIONS: 5
 #      SCHEMA_URL: http://schema1:8081
-#      SCHEMAS_PATH: /schemas
-#      TOPIC: customer
+#      SCHEMAS_PATH: schemas/source
+#      STATE_TOPIC: source.state
+#      THREADS: 5
 #    volumes:
 #      - ./volumes/producer/schemas:/schemas
 #    networks:
@@ -203,32 +212,34 @@ services:
 #      timeout: 10s
 #      retries: 10
 #
-#  streams:
-#    image: com.mycompany/kafka-streams:1.0-SNAPSHOT
-#    hostname: streams
-#    container_name: streams
+#  contact-address-stream:
+#    image: com.mycompany/contact-address-stream:1.0-SNAPSHOT
+#    hostname: contact-address-stream
+#    container_name: contact-address-stream
 #    links:
 #      - schema1
 #    depends_on:
 #      schema1:
 #        condition: service_healthy
 #    ports:
-#      - "8801:8080"
+#      - "8800:8080"
 #    environment:
-#      APP_ID: customer-transformer
+#      APP_ID: contact-address-stream
 #      BOOTSTRAP_URL: kafka1:29092
-#      ERROR_TOPIC: customer.error
-#      GROUP_ID: customer-transformer
+#      CLIENT_ID: producer
+#      CONTACT_ADDRESS_TOPIC: source.contactaddress
+#      COUNTRY_TOPIC: source.country
+#      ERROR_TOPIC: error.contactaddress
+#      GROUP_ID: contact-address-stream
 #      IN_MEMORY_STATE: false
-#      INPUT_TOPIC: customer
-#      OUTPUT_TOPIC: customer.transformed
-#      ROCKSDB_SHAREDLIB_DIR: /rocksdb
+#      OUTPUT_TOPIC: canonical.contactaddress
 #      SCHEMA_URL: http://schema1:8081
-#      STREAM_TYPE: stateful
-#      STATE_DIR: /kstreams
+#      STATE_DIR: /data
+#      STATE_STORE_CLEANUP: false
+#      STATE_TOPIC: source.state
+#      THREADS: 5
 #    volumes:
-#      - ./volumes/kstream-1/data:/kstreams
-#      - ./volumes/kstream-1/rocksjnilib:/rocksdb
+#      - ./volumes/contact-address-stream/data:/data
 #    networks:
 #      - kafka-network
 #    healthcheck:
@@ -330,7 +341,6 @@ services:
       - ./grafana/dashboards:/etc/grafana/dashboards
     networks:
       - kafka-network
-
 networks:
   kafka-network:
     name: ${DOMAIN}

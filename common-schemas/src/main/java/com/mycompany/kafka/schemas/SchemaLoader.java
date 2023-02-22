@@ -36,7 +36,16 @@ public class SchemaLoader {
         final File jarFile = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
         if (jarFile.isFile()) {
 
-            String schemaFolder = schemasPath.substring(schemasPath.lastIndexOf("/") + 1);
+            if (schemasPath.startsWith("file:/")) {
+                schemasPath = schemasPath.substring(schemasPath.indexOf(".jar!/") + 6);
+            }
+
+            if (!schemasPath.endsWith("/")) {
+                schemasPath = schemasPath + "/";
+            }
+            String[] folders = schemasPath.split("/");
+            int folder = 0;
+            String schemasFolder = folders.length > folder ? folders[folder] + "/" : "/";
             String tmpDir = System.getProperty("java.io.tmpdir");
 
             final JarFile jar = new JarFile(jarFile);
@@ -45,26 +54,29 @@ public class SchemaLoader {
 
                 JarEntry jarEntry = entries.nextElement();
                 final String name = jarEntry.getName();
-                if (name.startsWith(schemaFolder)) {
+                if (name.startsWith(schemasFolder)) {
 
                     java.io.File f = new java.io.File(tmpDir + java.io.File.separator + name);
                     if (jarEntry.isDirectory()) {
-                        f.mkdir();
+                        if (f.mkdir()) {
+                            log.info("Created folder {}", f.getName());
+                        }
+                        folder++;
+                        schemasFolder = folders.length > folder ? schemasFolder + folders[folder] + "/" : schemasFolder;
                         continue;
                     }
 
-                    java.io.InputStream in = jar.getInputStream(jarEntry);
-                    java.io.FileOutputStream out = new java.io.FileOutputStream(f);
-                    while (in.available() > 0) {
-                        out.write(in.read());
+                    try (java.io.InputStream in = jar.getInputStream(jarEntry);
+                         java.io.FileOutputStream out = new java.io.FileOutputStream(f)) {
+                        while (in.available() > 0) {
+                            out.write(in.read());
+                        }
                     }
-                    out.close();
-                    in.close();
                 }
             }
             jar.close();
 
-            schemasPath = tmpDir + schemaFolder;
+            schemasPath = tmpDir + schemasPath;
         }
     }
 

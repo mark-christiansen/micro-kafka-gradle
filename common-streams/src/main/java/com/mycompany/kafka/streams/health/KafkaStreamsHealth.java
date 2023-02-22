@@ -1,7 +1,7 @@
 package com.mycompany.kafka.streams.health;
 
-import com.mycompany.kafka.streams.KafkaStreamsRegistry;
-import com.mycompany.kafka.streams.KafkaStreamConfiguration;
+import com.mycompany.kafka.streams.metrics.KafkaStreamsRegistry;
+import com.mycompany.kafka.streams.metrics.KafkaStreamConfiguration;
 import io.micronaut.configuration.kafka.config.AbstractKafkaConfiguration;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.health.HealthStatus;

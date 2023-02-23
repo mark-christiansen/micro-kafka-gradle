@@ -1,5 +1,7 @@
 package com.mycompany.kafka.streams.serdes;
 
+import com.mycompany.kafka.model.canonical.Account;
+import com.mycompany.kafka.model.canonical.AccountContact;
 import com.mycompany.kafka.model.canonical.Contact;
 import com.mycompany.kafka.model.canonical.ContactAddress;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -30,6 +32,18 @@ public class Serdes {
     public Serde<GenericRecord> createGenericSerde(boolean key) {
         GenericAvroSerde serde = new GenericAvroSerde(client);
         serde.configure(getSerdeConfig(), key);
+        return serde;
+    }
+
+    public SpecificAvroSerde<Account> createAccountSerde() {
+        SpecificAvroSerde<Account> serde = new SpecificAvroSerde<>(client);
+        serde.configure(getSerdeConfig(), false);
+        return serde;
+    }
+
+    public SpecificAvroSerde<AccountContact> createAccountContactSerde() {
+        SpecificAvroSerde<AccountContact> serde = new SpecificAvroSerde<>(client);
+        serde.configure(getSerdeConfig(), false);
         return serde;
     }
 

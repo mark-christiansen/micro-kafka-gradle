@@ -30,7 +30,7 @@
         "null",
         {
           "type": "array",
-          "items": "com.mycompany.kafka.model.canonical.Contact",
+          "items": "com.mycompany.kafka.model.canonical.AccountContact",
           "default": []
         }
       ],

@@ -1,7 +1,7 @@
 application:
   contact.address.topic: ${CONTACT_ADDRESS_TOPIC}
-  country.topic: ${COUNTRY_TOPIC}
   state.topic: ${STATE_TOPIC}
+  country.topic: ${COUNTRY_TOPIC}
   output.topic: ${OUTPUT_TOPIC}
   failure.output.topic: ${ERROR_TOPIC}
   state.store.cleanup: ${STATE_STORE_CLEANUP:false}

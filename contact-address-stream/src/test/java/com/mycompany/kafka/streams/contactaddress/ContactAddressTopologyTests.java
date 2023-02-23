@@ -68,15 +68,21 @@ public class ContactAddressTopologyTests extends TopologyTest {
                     OUTPUT_TOPIC, outputSerdes.key.deserializer(), outputSerdes.value.deserializer());
 
             TestDataHelper dataHelper = new TestDataHelper("schemas/source");
+
+            // produce state
             KeyValue<Long, GenericRecord> state = dataHelper.createState();
             stateTopic.pipeInput(state.key, state.value);
+
+            // produce country
             KeyValue<Long, GenericRecord> country = dataHelper.createCountry();
             countryTopic.pipeInput(country.key, country.value);
 
+            // produce contact address
             KeyValue<Long, GenericRecord> address = dataHelper.createContactAddress();
             inputTopic.pipeInput(address.key, address.value);
-            TestRecord<String, ContactAddress> out = outputTopic.readRecord();
 
+            // first record has contact address, state and country info
+            TestRecord<String, ContactAddress> out = outputTopic.readRecord();
             dataHelper.verifyContactAddressKey(address.key, out.key());
             dataHelper.verifyContactAddressValue(address.value, state.value, country.value, out.value());
         }

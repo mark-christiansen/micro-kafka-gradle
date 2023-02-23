@@ -11,11 +11,11 @@ import org.apache.avro.message.SchemaStore;
 import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
-public class Account extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -7884039673931682477L;
+public class AccountContact extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = 6406097128741735651L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Account\",\"namespace\":\"com.mycompany.kafka.model.canonical\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"accountNumber\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"accountType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"contacts\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"AccountContact\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"accountId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"contactRole\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"contact\",\"type\":[\"null\",{\"type\":\"record\",\"name\":\"Contact\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"firstName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"middleName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"lastName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"socialSecurityNumber\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"birthDate\",\"type\":[\"null\",{\"type\":\"int\",\"logicalType\":\"date\"}],\"default\":null},{\"name\":\"addresses\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"ContactAddress\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"contactId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"addressLine1\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"addressLine2\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"addressLine3\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"city\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"state\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"country\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"postalCode\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"created\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"updated\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"source\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]},\"default\":[]}],\"default\":null},{\"name\":\"created\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"updated\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"source\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}],\"default\":null},{\"name\":\"created\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"updated\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"source\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]},\"default\":[]}],\"default\":null},{\"name\":\"created\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"updated\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"source\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"AccountContact\",\"namespace\":\"com.mycompany.kafka.model.canonical\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"accountId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"contactRole\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"contact\",\"type\":[\"null\",{\"type\":\"record\",\"name\":\"Contact\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"firstName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"middleName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"lastName\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"socialSecurityNumber\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"birthDate\",\"type\":[\"null\",{\"type\":\"int\",\"logicalType\":\"date\"}],\"default\":null},{\"name\":\"addresses\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"ContactAddress\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"contactId\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"addressLine1\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"addressLine2\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"addressLine3\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"city\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"state\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"country\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"postalCode\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"created\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"updated\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"source\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]},\"default\":[]}],\"default\":null},{\"name\":\"created\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"updated\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"source\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}],\"default\":null},{\"name\":\"created\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"updated\",\"type\":[\"null\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}],\"default\":null},{\"name\":\"source\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceType\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"sourceId\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -24,17 +24,17 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
     MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.TimestampMillisConversion());
   }
 
-  private static final BinaryMessageEncoder<Account> ENCODER =
+  private static final BinaryMessageEncoder<AccountContact> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<Account> DECODER =
+  private static final BinaryMessageDecoder<AccountContact> DECODER =
       new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<Account> getEncoder() {
+  public static BinaryMessageEncoder<AccountContact> getEncoder() {
     return ENCODER;
   }
 
@@ -42,7 +42,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<Account> getDecoder() {
+  public static BinaryMessageDecoder<AccountContact> getDecoder() {
     return DECODER;
   }
 
@@ -51,12 +51,12 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<Account> createDecoder(SchemaStore resolver) {
+  public static BinaryMessageDecoder<AccountContact> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this Account to a ByteBuffer.
+   * Serializes this AccountContact to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -65,20 +65,20 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Deserializes a Account from a ByteBuffer.
+   * Deserializes a AccountContact from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a Account instance decoded from the given buffer
+   * @return a AccountContact instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static Account fromByteBuffer(
+  public static AccountContact fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
   private java.lang.String id;
-  private java.lang.String accountNumber;
-  private java.lang.String accountType;
-  private java.util.List<com.mycompany.kafka.model.canonical.AccountContact> contacts;
+  private java.lang.String accountId;
+  private java.lang.String contactRole;
+  private com.mycompany.kafka.model.canonical.Contact contact;
   private java.time.Instant created;
   private java.time.Instant updated;
   private java.lang.String source;
@@ -90,25 +90,25 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public Account() {}
+  public AccountContact() {}
 
   /**
    * All-args constructor.
    * @param id The new value for id
-   * @param accountNumber The new value for accountNumber
-   * @param accountType The new value for accountType
-   * @param contacts The new value for contacts
+   * @param accountId The new value for accountId
+   * @param contactRole The new value for contactRole
+   * @param contact The new value for contact
    * @param created The new value for created
    * @param updated The new value for updated
    * @param source The new value for source
    * @param sourceType The new value for sourceType
    * @param sourceId The new value for sourceId
    */
-  public Account(java.lang.String id, java.lang.String accountNumber, java.lang.String accountType, java.util.List<com.mycompany.kafka.model.canonical.AccountContact> contacts, java.time.Instant created, java.time.Instant updated, java.lang.String source, java.lang.String sourceType, java.lang.String sourceId) {
+  public AccountContact(java.lang.String id, java.lang.String accountId, java.lang.String contactRole, com.mycompany.kafka.model.canonical.Contact contact, java.time.Instant created, java.time.Instant updated, java.lang.String source, java.lang.String sourceType, java.lang.String sourceId) {
     this.id = id;
-    this.accountNumber = accountNumber;
-    this.accountType = accountType;
-    this.contacts = contacts;
+    this.accountId = accountId;
+    this.contactRole = contactRole;
+    this.contact = contact;
     this.created = created;
     this.updated = updated;
     this.source = source;
@@ -127,9 +127,9 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return id;
-    case 1: return accountNumber;
-    case 2: return accountType;
-    case 3: return contacts;
+    case 1: return accountId;
+    case 2: return contactRole;
+    case 3: return contact;
     case 4: return created;
     case 5: return updated;
     case 6: return source;
@@ -145,9 +145,9 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: id = value$ != null ? value$.toString() : null; break;
-    case 1: accountNumber = value$ != null ? value$.toString() : null; break;
-    case 2: accountType = value$ != null ? value$.toString() : null; break;
-    case 3: contacts = (java.util.List<com.mycompany.kafka.model.canonical.AccountContact>)value$; break;
+    case 1: accountId = value$ != null ? value$.toString() : null; break;
+    case 2: contactRole = value$ != null ? value$.toString() : null; break;
+    case 3: contact = (com.mycompany.kafka.model.canonical.Contact)value$; break;
     case 4: created = (java.time.Instant)value$; break;
     case 5: updated = (java.time.Instant)value$; break;
     case 6: source = value$ != null ? value$.toString() : null; break;
@@ -175,54 +175,54 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Gets the value of the 'accountNumber' field.
-   * @return The value of the 'accountNumber' field.
+   * Gets the value of the 'accountId' field.
+   * @return The value of the 'accountId' field.
    */
-  public java.lang.String getAccountNumber() {
-    return accountNumber;
+  public java.lang.String getAccountId() {
+    return accountId;
   }
 
 
   /**
-   * Sets the value of the 'accountNumber' field.
+   * Sets the value of the 'accountId' field.
    * @param value the value to set.
    */
-  public void setAccountNumber(java.lang.String value) {
-    this.accountNumber = value;
+  public void setAccountId(java.lang.String value) {
+    this.accountId = value;
   }
 
   /**
-   * Gets the value of the 'accountType' field.
-   * @return The value of the 'accountType' field.
+   * Gets the value of the 'contactRole' field.
+   * @return The value of the 'contactRole' field.
    */
-  public java.lang.String getAccountType() {
-    return accountType;
+  public java.lang.String getContactRole() {
+    return contactRole;
   }
 
 
   /**
-   * Sets the value of the 'accountType' field.
+   * Sets the value of the 'contactRole' field.
    * @param value the value to set.
    */
-  public void setAccountType(java.lang.String value) {
-    this.accountType = value;
+  public void setContactRole(java.lang.String value) {
+    this.contactRole = value;
   }
 
   /**
-   * Gets the value of the 'contacts' field.
-   * @return The value of the 'contacts' field.
+   * Gets the value of the 'contact' field.
+   * @return The value of the 'contact' field.
    */
-  public java.util.List<com.mycompany.kafka.model.canonical.AccountContact> getContacts() {
-    return contacts;
+  public com.mycompany.kafka.model.canonical.Contact getContact() {
+    return contact;
   }
 
 
   /**
-   * Sets the value of the 'contacts' field.
+   * Sets the value of the 'contact' field.
    * @param value the value to set.
    */
-  public void setContacts(java.util.List<com.mycompany.kafka.model.canonical.AccountContact> value) {
-    this.contacts = value;
+  public void setContact(com.mycompany.kafka.model.canonical.Contact value) {
+    this.contact = value;
   }
 
   /**
@@ -311,50 +311,51 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   /**
-   * Creates a new Account RecordBuilder.
-   * @return A new Account RecordBuilder
+   * Creates a new AccountContact RecordBuilder.
+   * @return A new AccountContact RecordBuilder
    */
-  public static com.mycompany.kafka.model.canonical.Account.Builder newBuilder() {
-    return new com.mycompany.kafka.model.canonical.Account.Builder();
+  public static com.mycompany.kafka.model.canonical.AccountContact.Builder newBuilder() {
+    return new com.mycompany.kafka.model.canonical.AccountContact.Builder();
   }
 
   /**
-   * Creates a new Account RecordBuilder by copying an existing Builder.
+   * Creates a new AccountContact RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new Account RecordBuilder
+   * @return A new AccountContact RecordBuilder
    */
-  public static com.mycompany.kafka.model.canonical.Account.Builder newBuilder(com.mycompany.kafka.model.canonical.Account.Builder other) {
+  public static com.mycompany.kafka.model.canonical.AccountContact.Builder newBuilder(com.mycompany.kafka.model.canonical.AccountContact.Builder other) {
     if (other == null) {
-      return new com.mycompany.kafka.model.canonical.Account.Builder();
+      return new com.mycompany.kafka.model.canonical.AccountContact.Builder();
     } else {
-      return new com.mycompany.kafka.model.canonical.Account.Builder(other);
+      return new com.mycompany.kafka.model.canonical.AccountContact.Builder(other);
     }
   }
 
   /**
-   * Creates a new Account RecordBuilder by copying an existing Account instance.
+   * Creates a new AccountContact RecordBuilder by copying an existing AccountContact instance.
    * @param other The existing instance to copy.
-   * @return A new Account RecordBuilder
+   * @return A new AccountContact RecordBuilder
    */
-  public static com.mycompany.kafka.model.canonical.Account.Builder newBuilder(com.mycompany.kafka.model.canonical.Account other) {
+  public static com.mycompany.kafka.model.canonical.AccountContact.Builder newBuilder(com.mycompany.kafka.model.canonical.AccountContact other) {
     if (other == null) {
-      return new com.mycompany.kafka.model.canonical.Account.Builder();
+      return new com.mycompany.kafka.model.canonical.AccountContact.Builder();
     } else {
-      return new com.mycompany.kafka.model.canonical.Account.Builder(other);
+      return new com.mycompany.kafka.model.canonical.AccountContact.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for Account instances.
+   * RecordBuilder for AccountContact instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Account>
-    implements org.apache.avro.data.RecordBuilder<Account> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<AccountContact>
+    implements org.apache.avro.data.RecordBuilder<AccountContact> {
 
     private java.lang.String id;
-    private java.lang.String accountNumber;
-    private java.lang.String accountType;
-    private java.util.List<com.mycompany.kafka.model.canonical.AccountContact> contacts;
+    private java.lang.String accountId;
+    private java.lang.String contactRole;
+    private com.mycompany.kafka.model.canonical.Contact contact;
+    private com.mycompany.kafka.model.canonical.Contact.Builder contactBuilder;
     private java.time.Instant created;
     private java.time.Instant updated;
     private java.lang.String source;
@@ -370,23 +371,26 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.mycompany.kafka.model.canonical.Account.Builder other) {
+    private Builder(com.mycompany.kafka.model.canonical.AccountContact.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.accountNumber)) {
-        this.accountNumber = data().deepCopy(fields()[1].schema(), other.accountNumber);
+      if (isValidValue(fields()[1], other.accountId)) {
+        this.accountId = data().deepCopy(fields()[1].schema(), other.accountId);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.accountType)) {
-        this.accountType = data().deepCopy(fields()[2].schema(), other.accountType);
+      if (isValidValue(fields()[2], other.contactRole)) {
+        this.contactRole = data().deepCopy(fields()[2].schema(), other.contactRole);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.contacts)) {
-        this.contacts = data().deepCopy(fields()[3].schema(), other.contacts);
+      if (isValidValue(fields()[3], other.contact)) {
+        this.contact = data().deepCopy(fields()[3].schema(), other.contact);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
+      }
+      if (other.hasContactBuilder()) {
+        this.contactBuilder = com.mycompany.kafka.model.canonical.Contact.newBuilder(other.getContactBuilder());
       }
       if (isValidValue(fields()[4], other.created)) {
         this.created = data().deepCopy(fields()[4].schema(), other.created);
@@ -411,27 +415,28 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /**
-     * Creates a Builder by copying an existing Account instance
+     * Creates a Builder by copying an existing AccountContact instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.mycompany.kafka.model.canonical.Account other) {
+    private Builder(com.mycompany.kafka.model.canonical.AccountContact other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.accountNumber)) {
-        this.accountNumber = data().deepCopy(fields()[1].schema(), other.accountNumber);
+      if (isValidValue(fields()[1], other.accountId)) {
+        this.accountId = data().deepCopy(fields()[1].schema(), other.accountId);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.accountType)) {
-        this.accountType = data().deepCopy(fields()[2].schema(), other.accountType);
+      if (isValidValue(fields()[2], other.contactRole)) {
+        this.contactRole = data().deepCopy(fields()[2].schema(), other.contactRole);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.contacts)) {
-        this.contacts = data().deepCopy(fields()[3].schema(), other.contacts);
+      if (isValidValue(fields()[3], other.contact)) {
+        this.contact = data().deepCopy(fields()[3].schema(), other.contact);
         fieldSetFlags()[3] = true;
       }
+      this.contactBuilder = null;
       if (isValidValue(fields()[4], other.created)) {
         this.created = data().deepCopy(fields()[4].schema(), other.created);
         fieldSetFlags()[4] = true;
@@ -468,7 +473,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setId(java.lang.String value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setId(java.lang.String value) {
       validate(fields()[0], value);
       this.id = value;
       fieldSetFlags()[0] = true;
@@ -488,128 +493,164 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearId() {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearId() {
       id = null;
       fieldSetFlags()[0] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'accountNumber' field.
+      * Gets the value of the 'accountId' field.
       * @return The value.
       */
-    public java.lang.String getAccountNumber() {
-      return accountNumber;
+    public java.lang.String getAccountId() {
+      return accountId;
     }
 
 
     /**
-      * Sets the value of the 'accountNumber' field.
-      * @param value The value of 'accountNumber'.
+      * Sets the value of the 'accountId' field.
+      * @param value The value of 'accountId'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setAccountNumber(java.lang.String value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setAccountId(java.lang.String value) {
       validate(fields()[1], value);
-      this.accountNumber = value;
+      this.accountId = value;
       fieldSetFlags()[1] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'accountNumber' field has been set.
-      * @return True if the 'accountNumber' field has been set, false otherwise.
+      * Checks whether the 'accountId' field has been set.
+      * @return True if the 'accountId' field has been set, false otherwise.
       */
-    public boolean hasAccountNumber() {
+    public boolean hasAccountId() {
       return fieldSetFlags()[1];
     }
 
 
     /**
-      * Clears the value of the 'accountNumber' field.
+      * Clears the value of the 'accountId' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearAccountNumber() {
-      accountNumber = null;
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearAccountId() {
+      accountId = null;
       fieldSetFlags()[1] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'accountType' field.
+      * Gets the value of the 'contactRole' field.
       * @return The value.
       */
-    public java.lang.String getAccountType() {
-      return accountType;
+    public java.lang.String getContactRole() {
+      return contactRole;
     }
 
 
     /**
-      * Sets the value of the 'accountType' field.
-      * @param value The value of 'accountType'.
+      * Sets the value of the 'contactRole' field.
+      * @param value The value of 'contactRole'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setAccountType(java.lang.String value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setContactRole(java.lang.String value) {
       validate(fields()[2], value);
-      this.accountType = value;
+      this.contactRole = value;
       fieldSetFlags()[2] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'accountType' field has been set.
-      * @return True if the 'accountType' field has been set, false otherwise.
+      * Checks whether the 'contactRole' field has been set.
+      * @return True if the 'contactRole' field has been set, false otherwise.
       */
-    public boolean hasAccountType() {
+    public boolean hasContactRole() {
       return fieldSetFlags()[2];
     }
 
 
     /**
-      * Clears the value of the 'accountType' field.
+      * Clears the value of the 'contactRole' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearAccountType() {
-      accountType = null;
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearContactRole() {
+      contactRole = null;
       fieldSetFlags()[2] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'contacts' field.
+      * Gets the value of the 'contact' field.
       * @return The value.
       */
-    public java.util.List<com.mycompany.kafka.model.canonical.AccountContact> getContacts() {
-      return contacts;
+    public com.mycompany.kafka.model.canonical.Contact getContact() {
+      return contact;
     }
 
 
     /**
-      * Sets the value of the 'contacts' field.
-      * @param value The value of 'contacts'.
+      * Sets the value of the 'contact' field.
+      * @param value The value of 'contact'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setContacts(java.util.List<com.mycompany.kafka.model.canonical.AccountContact> value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setContact(com.mycompany.kafka.model.canonical.Contact value) {
       validate(fields()[3], value);
-      this.contacts = value;
+      this.contactBuilder = null;
+      this.contact = value;
       fieldSetFlags()[3] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'contacts' field has been set.
-      * @return True if the 'contacts' field has been set, false otherwise.
+      * Checks whether the 'contact' field has been set.
+      * @return True if the 'contact' field has been set, false otherwise.
       */
-    public boolean hasContacts() {
+    public boolean hasContact() {
       return fieldSetFlags()[3];
     }
 
+    /**
+     * Gets the Builder instance for the 'contact' field and creates one if it doesn't exist yet.
+     * @return This builder.
+     */
+    public com.mycompany.kafka.model.canonical.Contact.Builder getContactBuilder() {
+      if (contactBuilder == null) {
+        if (hasContact()) {
+          setContactBuilder(com.mycompany.kafka.model.canonical.Contact.newBuilder(contact));
+        } else {
+          setContactBuilder(com.mycompany.kafka.model.canonical.Contact.newBuilder());
+        }
+      }
+      return contactBuilder;
+    }
 
     /**
-      * Clears the value of the 'contacts' field.
+     * Sets the Builder instance for the 'contact' field
+     * @param value The builder instance that must be set.
+     * @return This builder.
+     */
+
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setContactBuilder(com.mycompany.kafka.model.canonical.Contact.Builder value) {
+      clearContact();
+      contactBuilder = value;
+      return this;
+    }
+
+    /**
+     * Checks whether the 'contact' field has an active Builder instance
+     * @return True if the 'contact' field has an active Builder instance
+     */
+    public boolean hasContactBuilder() {
+      return contactBuilder != null;
+    }
+
+    /**
+      * Clears the value of the 'contact' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearContacts() {
-      contacts = null;
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearContact() {
+      contact = null;
+      contactBuilder = null;
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -628,7 +669,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'created'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setCreated(java.time.Instant value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setCreated(java.time.Instant value) {
       validate(fields()[4], value);
       this.created = value;
       fieldSetFlags()[4] = true;
@@ -648,7 +689,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'created' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearCreated() {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearCreated() {
       created = null;
       fieldSetFlags()[4] = false;
       return this;
@@ -668,7 +709,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'updated'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setUpdated(java.time.Instant value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setUpdated(java.time.Instant value) {
       validate(fields()[5], value);
       this.updated = value;
       fieldSetFlags()[5] = true;
@@ -688,7 +729,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'updated' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearUpdated() {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearUpdated() {
       updated = null;
       fieldSetFlags()[5] = false;
       return this;
@@ -708,7 +749,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'source'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setSource(java.lang.String value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setSource(java.lang.String value) {
       validate(fields()[6], value);
       this.source = value;
       fieldSetFlags()[6] = true;
@@ -728,7 +769,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'source' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearSource() {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearSource() {
       source = null;
       fieldSetFlags()[6] = false;
       return this;
@@ -748,7 +789,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'sourceType'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setSourceType(java.lang.String value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setSourceType(java.lang.String value) {
       validate(fields()[7], value);
       this.sourceType = value;
       fieldSetFlags()[7] = true;
@@ -768,7 +809,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'sourceType' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearSourceType() {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearSourceType() {
       sourceType = null;
       fieldSetFlags()[7] = false;
       return this;
@@ -788,7 +829,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * @param value The value of 'sourceId'.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder setSourceId(java.lang.String value) {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder setSourceId(java.lang.String value) {
       validate(fields()[8], value);
       this.sourceId = value;
       fieldSetFlags()[8] = true;
@@ -808,7 +849,7 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
       * Clears the value of the 'sourceId' field.
       * @return This builder.
       */
-    public com.mycompany.kafka.model.canonical.Account.Builder clearSourceId() {
+    public com.mycompany.kafka.model.canonical.AccountContact.Builder clearSourceId() {
       sourceId = null;
       fieldSetFlags()[8] = false;
       return this;
@@ -816,13 +857,22 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
 
     @Override
     @SuppressWarnings("unchecked")
-    public Account build() {
+    public AccountContact build() {
       try {
-        Account record = new Account();
+        AccountContact record = new AccountContact();
         record.id = fieldSetFlags()[0] ? this.id : (java.lang.String) defaultValue(fields()[0]);
-        record.accountNumber = fieldSetFlags()[1] ? this.accountNumber : (java.lang.String) defaultValue(fields()[1]);
-        record.accountType = fieldSetFlags()[2] ? this.accountType : (java.lang.String) defaultValue(fields()[2]);
-        record.contacts = fieldSetFlags()[3] ? this.contacts : (java.util.List<com.mycompany.kafka.model.canonical.AccountContact>) defaultValue(fields()[3]);
+        record.accountId = fieldSetFlags()[1] ? this.accountId : (java.lang.String) defaultValue(fields()[1]);
+        record.contactRole = fieldSetFlags()[2] ? this.contactRole : (java.lang.String) defaultValue(fields()[2]);
+        if (contactBuilder != null) {
+          try {
+            record.contact = this.contactBuilder.build();
+          } catch (org.apache.avro.AvroMissingFieldException e) {
+            e.addParentField(record.getSchema().getField("contact"));
+            throw e;
+          }
+        } else {
+          record.contact = fieldSetFlags()[3] ? this.contact : (com.mycompany.kafka.model.canonical.Contact) defaultValue(fields()[3]);
+        }
         record.created = fieldSetFlags()[4] ? this.created : (java.time.Instant) defaultValue(fields()[4]);
         record.updated = fieldSetFlags()[5] ? this.updated : (java.time.Instant) defaultValue(fields()[5]);
         record.source = fieldSetFlags()[6] ? this.source : (java.lang.String) defaultValue(fields()[6]);
@@ -838,8 +888,8 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<Account>
-    WRITER$ = (org.apache.avro.io.DatumWriter<Account>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<AccountContact>
+    WRITER$ = (org.apache.avro.io.DatumWriter<AccountContact>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -847,8 +897,8 @@ public class Account extends org.apache.avro.specific.SpecificRecordBase impleme
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<Account>
-    READER$ = (org.apache.avro.io.DatumReader<Account>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<AccountContact>
+    READER$ = (org.apache.avro.io.DatumReader<AccountContact>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {

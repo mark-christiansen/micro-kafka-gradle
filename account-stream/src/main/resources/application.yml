@@ -1,5 +1,6 @@
 application:
-  input.topic: ${INPUT_TOPIC}
+  account.topic: ${ACCOUNT_TOPIC}
+  account.contact.topic: ${ACCOUNT_CONTACT_TOPIC}
   output.topic: ${OUTPUT_TOPIC}
   failure.output.topic: ${ERROR_TOPIC}
   state.store.cleanup: ${STATE_STORE_CLEANUP:false}

@@ -52,7 +52,7 @@ kafka:
     max.in.flight.requests.per.connection: 1
     buffered.records.per.partition: 1000
     commit.interval.ms: 5000
-    num.stream.threads: 1
+    num.stream.threads: ${THREADS:1}
     poll.ms: 100
     cache.max.bytes.buffering: 10485760
     # state store configuration

@@ -9,10 +9,10 @@ echo "build the fat jars for ${APP}"
 
 echo ""
 echo "setup environment variables for the ${APP} to be run"
-export APP_ID=${APP}
-export BOOTSTRAP_URL=localhost:9092
 export ACCOUNT_TOPIC=source.account
 export ACCOUNT_CONTACT_TOPIC=canonical.accountcontact
+export APP_ID=${APP}
+export BOOTSTRAP_URL=localhost:9092
 export ERROR_TOPIC=error.account
 export GROUP_ID=${APP}
 export HTTP_PORT=8804

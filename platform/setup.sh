@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "Crete volumes"
-mkdir volumes/account-contact-stream
-mkdir volumes/account-stream
-mkdir volumes/contact-address-stream
-mkdir volumes/contact-stream
+mkdir volumes/account-contact-stream-1
+mkdir volumes/account-stream-1
+mkdir volumes/contact-address-stream-1
+mkdir volumes/contact-stream-1
 mkdir volumes/grafana
 mkdir volumes/kafka-1
 mkdir volumes/postgres

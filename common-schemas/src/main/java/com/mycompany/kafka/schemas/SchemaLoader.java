@@ -22,8 +22,14 @@ public class SchemaLoader {
     private String schemasPath;
 
     public SchemaLoader(String schemasPath) throws IOException {
+        this(schemasPath, false);
+    }
+
+    public SchemaLoader(String schemasPath, boolean loadFromClasspath) throws IOException {
         this.schemasPath = schemasPath;
-        extractSchemasFromJar();
+        if (loadFromClasspath) {
+            extractSchemasFromJar();
+        }
         loadSchemas();
     }
 

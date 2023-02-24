@@ -37,6 +37,8 @@ public class DataProducer {
     private final String canonicalContactAddressTopic;
     private final int partitions;
     private final long accounts;
+    private final long contactsPerAccount;
+    private final long addressesPerContact;
     private final int batchSize;
     private final long frequencyMs;
     private final ExecutorService executorService;
@@ -64,6 +66,8 @@ public class DataProducer {
         this.canonicalContactAddressTopic = (String) appConfig.get("canonical.contact.address.topic");
         this.partitions = Integer.parseInt((String) appConfig.get("partitions"));
         this.accounts = Long.parseLong((String) appConfig.get("accounts"));
+        this.contactsPerAccount = Long.parseLong((String) appConfig.get("contacts.per.account"));
+        this.addressesPerContact = Long.parseLong((String) appConfig.get("addresses.per.contact"));
         this.batchSize = Integer.parseInt((String) appConfig.get("batch.size"));
         this.frequencyMs = Long.parseLong((String) appConfig.get("frequency.ms"));
         this.executorService = new ThreadPoolExecutor(1, Integer.parseInt((String) appConfig.get("threads")),
@@ -76,8 +80,8 @@ public class DataProducer {
         int countryCount = 100;
         int stateCount = 50;
 
-        long contactCount = accounts * 3;
-        long addressCount = contactCount * 2;
+        long contactCount = accounts * contactsPerAccount;
+        long addressCount = contactCount * addressesPerContact;
 
         // create topics
         log.info("Creating topics...");

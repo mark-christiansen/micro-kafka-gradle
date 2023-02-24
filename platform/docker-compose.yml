@@ -172,82 +172,86 @@ services:
 
   ################## CLIENTS ##################
 
-#  producer:
-#    image: com.mycompany/kafka-producer:1.0-SNAPSHOT
-#    hostname: producer
-#    container_name: producer
-#    links:
-#      - schema1
-#    depends_on:
-#      schema1:
-#        condition: service_healthy
-#    ports:
-#      - "8800:8080"
-#    environment:
-#      ACCOUNT_CONTACT_TOPIC: source.accountcontact
-#      ACCOUNT_TOPIC: source.account
-#      ACCOUNTS: 100000
-#      ADDRESSES_PER_CONTACT: 2
-#      BATCH_SIZE: 100
-#      BOOTSTRAP_URL: kafka1:29092
-#      CLIENT_ID: producer
-#      CONTACT_ADDRESS_TOPIC: source.contactaddress
-#      CONTACT_ROLE_TOPIC: source.contactrole
-#      CONTACT_TOPIC: source.contact
-#      CONTACTS_PER_ACCOUNT: 3
-#      COUNTRY_TOPIC: source.country
-#      FREQUENCY_MS: 100
-#      PARTITIONS: 5
-#      SCHEMA_URL: http://schema1:8081
-#      SCHEMAS_PATH: schemas/source
-#      STATE_TOPIC: source.state
-#      THREADS: 5
-#    volumes:
-#      - ./volumes/producer/schemas:/schemas
-#    networks:
-#      - kafka-network
-#    healthcheck:
-#      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
-#      interval: 2s
-#      timeout: 10s
-#      retries: 10
-#
-#  contact-address-stream:
-#    image: com.mycompany/contact-address-stream:1.0-SNAPSHOT
-#    hostname: contact-address-stream
-#    container_name: contact-address-stream
-#    links:
-#      - schema1
-#    depends_on:
-#      schema1:
-#        condition: service_healthy
-#    ports:
-#      - "8800:8080"
-#    environment:
-#      APP_ID: contact-address-stream
-#      BOOTSTRAP_URL: kafka1:29092
-#      CLIENT_ID: producer
-#      CONTACT_ADDRESS_TOPIC: source.contactaddress
-#      COUNTRY_TOPIC: source.country
-#      ERROR_TOPIC: error.contactaddress
-#      GROUP_ID: contact-address-stream
-#      IN_MEMORY_STATE: false
-#      OUTPUT_TOPIC: canonical.contactaddress
-#      SCHEMA_URL: http://schema1:8081
-#      STATE_DIR: /data
-#      STATE_STORE_CLEANUP: false
-#      STATE_TOPIC: source.state
-#      THREADS: 5
-#    volumes:
-#      - ./volumes/contact-address-stream/data:/data
-#    networks:
-#      - kafka-network
-#    healthcheck:
-#      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
-#      interval: 2s
-#      timeout: 10s
-#      retries: 10
-#
+  producer:
+    image: com.mycompany/kafka-producer:1.0-SNAPSHOT
+    hostname: producer
+    container_name: producer
+    links:
+      - schema1
+    depends_on:
+      schema1:
+        condition: service_healthy
+    ports:
+      - "8800:8080"
+    environment:
+      ACCOUNT_CONTACT_TOPIC: source.accountcontact
+      ACCOUNT_TOPIC: source.account
+      ACCOUNTS: 100
+      ADDRESSES_PER_CONTACT: 1
+      BATCH_SIZE: 10
+      BOOTSTRAP_URL: kafka1:29092
+      CANONICAL_ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
+      CANONICAL_ACCOUNT_TOPIC: canonical.account
+      CANONICAL_CONTACT_ADDRESS_TOPIC: canonical.contactaddress
+      CANONICAL_CONTACT_TOPIC: canonical.contact
+      CLIENT_ID: producer
+      CONTACT_ADDRESS_TOPIC: source.contactaddress
+      CONTACT_ROLE_TOPIC: source.contactrole
+      CONTACT_TOPIC: source.contact
+      CONTACTS_PER_ACCOUNT: 1
+      COUNTRY_TOPIC: source.country
+      FREQUENCY_MS: 100
+      LOAD_SCHEMAS_FROM_CLASSPATH: false
+      PARTITIONS: 5
+      SCHEMA_URL: http://schema1:8081
+      SCHEMAS_PATH: /schemas
+      STATE_TOPIC: source.state
+      THREADS: 5
+    volumes:
+      - ./volumes/producer/schemas:/schemas
+    networks:
+      - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
+  contact-address-stream:
+    image: com.mycompany/contact-address-stream:1.0-SNAPSHOT
+    hostname: contact-address-stream
+    container_name: contact-address-stream
+    links:
+      - producer
+    depends_on:
+      producer:
+        condition: service_healthy
+    ports:
+      - "8801:8080"
+    environment:
+      APP_ID: contact-address-stream
+      BOOTSTRAP_URL: kafka1:29092
+      CONTACT_ADDRESS_TOPIC: source.contactaddress
+      COUNTRY_TOPIC: source.country
+      ERROR_TOPIC: error.contactaddress
+      GROUP_ID: contact-address-stream
+      IN_MEMORY_STATE: false
+      OUTPUT_TOPIC: canonical.contactaddress
+      SCHEMA_URL: http://schema1:8081
+      STATE_DIR: /data
+      STATE_STORE_CLEANUP: false
+      STATE_TOPIC: source.state
+      THREADS: 5
+    volumes:
+      - ./volumes/contact-address-stream/data:/data
+    networks:
+      - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
 #  consumer:
 #    image: com.mycompany/kafka-consumer:1.0-SNAPSHOT
 #    hostname: consumer

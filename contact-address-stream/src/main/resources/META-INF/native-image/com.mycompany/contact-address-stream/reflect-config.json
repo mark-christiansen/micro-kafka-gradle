@@ -106,30 +106,6 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.github.javafaker.Address",
-  "queryAllPublicMethods":true,
-  "methods":[
-    {"name":"buildingNumber","parameterTypes":[] }, 
-    {"name":"cityPrefix","parameterTypes":[] }, 
-    {"name":"citySuffix","parameterTypes":[] }, 
-    {"name":"streetName","parameterTypes":[] }, 
-    {"name":"streetSuffix","parameterTypes":[] }
-  ]
-},
-{
-  "name":"com.github.javafaker.Faker",
-  "queryAllPublicMethods":true,
-  "methods":[{"name":"name","parameterTypes":[] }]
-},
-{
-  "name":"com.github.javafaker.Name",
-  "queryAllPublicMethods":true,
-  "methods":[
-    {"name":"firstName","parameterTypes":[] }, 
-    {"name":"lastName","parameterTypes":[] }
-  ]
-},
-{
   "name":"com.google.common.util.concurrent.AbstractFuture",
   "fields":[
     {"name":"listeners"}, 
@@ -148,24 +124,64 @@
   "name":"com.ibm.lang.management.OperatingSystemMXBean"
 },
 {
-  "name":"com.mycompany.kafka.producer.$ApplicationFactory$AdminClient1$Definition$Reference",
+  "name":"com.mycompany.kafka.model.canonical.ContactAddress",
+  "fields":[{"name":"MODEL$"}]
+},
+{
+  "name":"com.mycompany.kafka.streams.$StreamFactory$ApplicationProperties0$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.mycompany.kafka.producer.$ApplicationFactory$Definition$Reference",
+  "name":"com.mycompany.kafka.streams.$StreamFactory$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.mycompany.kafka.producer.$ApplicationFactory$Producer0$Definition$Reference",
+  "name":"com.mycompany.kafka.streams.$StreamFactory$KafkaStreamsConfiguration3$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.mycompany.kafka.producer.$ApplicationFactory$SchemaLoader2$Definition$Reference",
+  "name":"com.mycompany.kafka.streams.$StreamFactory$Producer2$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.mycompany.kafka.producer.$DataProducer$Definition$Reference",
+  "name":"com.mycompany.kafka.streams.$StreamFactory$StreamProperties1$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.RocksDBConfig",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.contactaddress.$ContactAddressTopologyBuilder$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.health.$KafkaStreamsHealth$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.metrics.$KafkaStreamsMetrics$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.metrics.$KafkaStreamsRegistry$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.serdes.$SerdesFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.serdes.$SerdesFactory$SchemaRegistryClient0$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.serdes.$SerdesFactory$Serdes1$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.mycompany.kafka.streams.serdes.SerdesFactory",
+  "fields":[{"name":"environment"}]
 },
 {
   "name":"com.sun.crypto.provider.AESCipher$General",
@@ -255,6 +271,22 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"io.confluent.kafka.schemaregistry.client.rest.entities.SchemaReference",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true
+},
+{
+  "name":"io.confluent.kafka.schemaregistry.client.rest.entities.SchemaString",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[
+    {"name":"<init>","parameterTypes":[] }, 
+    {"name":"setSchemaString","parameterTypes":["java.lang.String"] }
+  ]
+},
+{
   "name":"io.confluent.kafka.schemaregistry.client.rest.entities.SchemaTypeConverter",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -294,7 +326,11 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"io.confluent.kafka.serializers.subject.TopicNameStrategy"
+  "name":"io.confluent.kafka.serializers.subject.TopicNameStrategy",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.confluent.kafka.streams.serdes.avro.GenericAvroSerde"
 },
 {
   "name":"io.methvin.watchservice.MacOSXListeningWatchService"
@@ -309,6 +345,10 @@
 },
 {
   "name":"io.micronaut.buffer.netty.$NettyByteBufferFactory$Definition$Reference",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"io.micronaut.configuration.kafka.streams.metrics.KafkaStreamsMetricsReporter",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -1738,6 +1778,10 @@
   "fields":[{"name":"TYPE"}]
 },
 {
+  "name":"java.lang.Comparable",
+  "queryAllDeclaredMethods":true
+},
+{
   "name":"java.lang.Deprecated",
   "queryAllPublicMethods":true
 },
@@ -1907,9 +1951,6 @@
   "name":"java.util.Date"
 },
 {
-  "name":"java.util.Map"
-},
-{
   "name":"java.util.PropertyPermission",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String"] }]
 },
@@ -2072,6 +2113,14 @@
     "fields":[{"name":"INSTANCE"}]
   },
 {
+  "name":"org.apache.kafka.clients.consumer.CooperativeStickyAssignor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.kafka.clients.consumer.RangeAssignor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"org.apache.kafka.common.serialization.LongSerializer",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -2082,6 +2131,36 @@
 {
   "name":"org.apache.kafka.common.utils.AppInfoParser$AppInfoMBean",
   "queryAllPublicMethods":true
+},
+{
+  "name":"org.apache.kafka.streams.errors.DefaultProductionExceptionHandler",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.kafka.streams.errors.LogAndFailExceptionHandler",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.kafka.streams.processor.FailOnInvalidTimestamp"
+},
+{
+  "name":"org.apache.kafka.streams.processor.WallclockTimestampExtractor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.kafka.streams.processor.internals.StateDirectory$StateDirectoryProcessFile",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.apache.kafka.streams.processor.internals.assignment.HighAvailabilityTaskAssignor",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
   "name":"reactor.core.publisher.Flux"
@@ -2152,6 +2231,10 @@
 },
 {
   "name":"sun.security.provider.JavaKeyStore$JKS",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.MD5",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {

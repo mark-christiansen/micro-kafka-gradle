@@ -26,20 +26,14 @@
       "pattern":"\\Qapplication.yml\\E"
     }, 
     {
-      "pattern":"\\Qen/address.yml\\E"
-    }, 
-    {
-      "pattern":"\\Qen/company.yml\\E"
-    }, 
-    {
-      "pattern":"\\Qen/country.yml\\E"
-    }, 
-    {
-      "pattern":"\\Qen/name.yml\\E"
+      "pattern":"\\Qkafka/kafka-streams-version.properties\\E"
     }, 
     {
       "pattern":"\\Qkafka/kafka-version.properties\\E"
-    }, 
+    },
+    {
+      "pattern":"\\Qlibrocksdbjni-linux64.so\\E"
+    },
     {
       "pattern":"\\Qlogback.xml\\E"
     }, 

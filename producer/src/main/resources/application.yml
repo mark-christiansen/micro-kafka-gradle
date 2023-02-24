@@ -12,11 +12,12 @@ application:
   canonical.contact.address.topic: ${CANONICAL_CONTACT_ADDRESS_TOPIC}
   partitions: ${PARTITIONS:1}
   accounts: ${ACCOUNTS}
-  contacts.per.account: ${CONTACTS_PER_ACCOUNT:3}
-  addresses.per.contact: ${ADDRESSES_PER_CONTACT:2}
+  contacts.per.account: ${CONTACTS_PER_ACCOUNT:1}
+  addresses.per.contact: ${ADDRESSES_PER_CONTACT:1}
   batch.size: ${BATCH_SIZE}
   frequency.ms: ${FREQUENCY_MS:1000}
   schemas.path: ${SCHEMAS_PATH:schemas/source}
+  load.schemas.from.classpath: ${LOAD_SCHEMAS_FROM_CLASSPATH:true}
   threads: ${THREADS:5}
 kafka:
   admin:

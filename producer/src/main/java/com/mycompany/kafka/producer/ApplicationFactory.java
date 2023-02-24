@@ -1,11 +1,8 @@
 package com.mycompany.kafka.producer;
 
 import com.mycompany.kafka.schemas.SchemaLoader;
-import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.env.Environment;
-import io.micronaut.core.naming.conventions.StringConvention;
-import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.admin.AdminClient;
@@ -13,17 +10,17 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Factory
-public class Config {
+public class ApplicationFactory {
 
-    private static final String SCHEMA_REGISTRY_AUTH = "schema.registry.auth";
+    private static final String LOAD_SCHEMAS_FROM_CLASSPATH = "application.load.schemas.from.classpath";
+    private static final String SCHEMAS_PATH = "application.schemas.path";
 
     private final Environment environment;
 
-    public Config(Environment environment) {
+    public ApplicationFactory(Environment environment) {
         this.environment = environment;
     }
 
@@ -41,7 +38,8 @@ public class Config {
 
     @Singleton
     public SchemaLoader schemaLoader() throws IOException {
-        String schemasPath =  environment.getProperty("application.schemas.path", String.class, "schemas");
-        return new SchemaLoader(schemasPath);
+        String schemasPath = environment.getProperty(SCHEMAS_PATH, String.class, "schemas/source");
+        Boolean loadSchemasFromClasspath = environment.getProperty(LOAD_SCHEMAS_FROM_CLASSPATH, Boolean.class, true);
+        return new SchemaLoader(schemasPath, Boolean.TRUE.equals(loadSchemasFromClasspath));
     }
 }

@@ -12,8 +12,7 @@ public class StreamsApplication {
 
     private static final Logger log = LoggerFactory.getLogger(StreamsApplication.class);
 
-    public static void main(String[] args) {
-
+    protected static void start(String[] args) {
         ApplicationContext ctx = Micronaut.run(StreamsApplication.class, args);
         Optional<KafkaStreamConfiguration> bean;
         do {

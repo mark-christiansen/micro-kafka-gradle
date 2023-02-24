@@ -29,10 +29,14 @@ public class TestDataHelper {
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
 
-    private final String schemasPath;
+    private final SchemaLoader schemaLoader;
 
-    public TestDataHelper(String schemasPath) {
-        this.schemasPath = schemasPath;
+    public TestDataHelper(String schemasPath) throws IOException {
+
+        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
+        assert schemaUrl != null;
+        String schemaFilepath = schemaUrl.getFile();
+        this.schemaLoader = new SchemaLoader(schemaFilepath, true);
     }
 
     public KeyValue<String, Account> canonizeAccount(KeyValue<Long, GenericRecord> kv) {
@@ -49,7 +53,7 @@ public class TestDataHelper {
         return new KeyValue<>(accountId, account);
     }
 
-    public KeyValue<String, AccountContact> canonizeAccountContact(KeyValue<Long, GenericRecord> kv) throws IOException {
+    public KeyValue<String, AccountContact> canonizeAccountContact(KeyValue<Long, GenericRecord> kv) {
 
         GenericRecord value = kv.value;
         String accountContactId = CanonicalId.getId(Source.SOURCE.toString(), Source.ACCOUNT_CONTACT.toString(),
@@ -98,7 +102,7 @@ public class TestDataHelper {
         return new KeyValue<>(contactId, contact);
     }
 
-    public KeyValue<String, ContactAddress> canonizeContactAddress(KeyValue<Long, GenericRecord> kv) throws IOException {
+    public KeyValue<String, ContactAddress> canonizeContactAddress(KeyValue<Long, GenericRecord> kv) {
 
         GenericRecord value = kv.value;
         String addressId = CanonicalId.getId(Source.SOURCE.toString(), Source.CONTACT_ADDRESS.toString(),
@@ -124,34 +128,21 @@ public class TestDataHelper {
         return new KeyValue<>(addressId, address);
     }
 
-    public KeyValue<Long, GenericRecord> createAccount() throws IOException {
+    public KeyValue<Long, GenericRecord> createAccount() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 5L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("account"));
         value.put("id", key);
         value.put("accountNumber", new Utf8("ABCD-DEFGH-1234-5678"));
         value.put("accountType", new Utf8("A"));
         value.put("created", toEpochMilli("09/01/2001 12:00:00"));
         value.put("updated", toEpochMilli("12/13/2005 15:30:00"));
-
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createAccountContact() throws IOException {
+    public KeyValue<Long, GenericRecord> createAccountContact() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 7L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("accountcontact"));
         value.put("id", key);
         value.put("accountId", 5L);
@@ -162,15 +153,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createAccountContact2() throws IOException {
+    public KeyValue<Long, GenericRecord> createAccountContact2() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 9L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("accountcontact"));
         value.put("id", key);
         value.put("accountId", 5L);
@@ -181,15 +166,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createContact() throws IOException {
+    public KeyValue<Long, GenericRecord> createContact() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 4L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("contact"));
         value.put("id", key);
         value.put("firstName", new Utf8("Salvatore"));
@@ -202,15 +181,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createContact2() throws IOException {
+    public KeyValue<Long, GenericRecord> createContact2() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 8L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("contact"));
         value.put("id", key);
         value.put("firstName", new Utf8("Billy"));
@@ -223,15 +196,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createContactAddress() throws IOException {
+    public KeyValue<Long, GenericRecord> createContactAddress() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 3L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("contactaddress"));
         value.put("id", key);
         value.put("contactId", 4L);
@@ -247,15 +214,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createPrimaryContactRole() throws IOException {
+    public KeyValue<Long, GenericRecord> createPrimaryContactRole() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 6L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("contactrole"));
         value.put("id", key);
         value.put("code", new Utf8("P"));
@@ -264,15 +225,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createSecondaryContactRole() throws IOException {
+    public KeyValue<Long, GenericRecord> createSecondaryContactRole() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 10L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("contactrole"));
         value.put("id", key);
         value.put("code", new Utf8("S"));
@@ -281,15 +236,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createCountry() throws IOException {
+    public KeyValue<Long, GenericRecord> createCountry() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 1L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("country"));
         value.put("id", key);
         value.put("code", new Utf8("US"));
@@ -298,15 +247,9 @@ public class TestDataHelper {
         return new KeyValue<>(key, value);
     }
 
-    public KeyValue<Long, GenericRecord> createState() throws IOException {
+    public KeyValue<Long, GenericRecord> createState() {
 
-        URL schemaUrl = this.getClass().getClassLoader().getResource(schemasPath);
-        assert schemaUrl != null;
-        String schemaFilepath = schemaUrl.getFile();
-
-        SchemaLoader schemaLoader = new SchemaLoader(schemaFilepath);
         Long key = 2L;
-
         GenericRecord value = new GenericData.Record(schemaLoader.getSchema("state"));
         value.put("id", key);
         value.put("code", new Utf8("MO"));

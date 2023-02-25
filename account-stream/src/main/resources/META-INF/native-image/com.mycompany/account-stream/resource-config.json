@@ -2,10 +2,16 @@
   "resources":{
   "includes":[
     {
+      "pattern":"\\QMETA-INF/micronaut/io.micronaut.core.beans.BeanIntrospectionReference\\E"
+    }, 
+    {
       "pattern":"\\QMETA-INF/micronaut/io.micronaut.inject.BeanConfiguration\\E"
     }, 
     {
       "pattern":"\\QMETA-INF/micronaut/io.micronaut.inject.BeanDefinitionReference\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/com.fasterxml.jackson.databind.Module\\E"
     }, 
     {
       "pattern":"\\QMETA-INF/services/io.confluent.kafka.schemaregistry.client.security.basicauth.BasicAuthCredentialProvider\\E"
@@ -18,6 +24,9 @@
     }, 
     {
       "pattern":"\\QMETA-INF/services/io.micronaut.core.type.TypeInformationProvider\\E"
+    }, 
+    {
+      "pattern":"\\QMETA-INF/services/io.micronaut.http.HttpResponseFactory\\E"
     }, 
     {
       "pattern":"\\QMETA-INF/services/java.nio.file.spi.FileSystemProvider\\E"

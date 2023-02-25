@@ -133,6 +133,7 @@ public class KafkaMetricMeterTypeBuilder {
 
         KafkaMetricMeterType kafkaMetricMeterType = kafkaMetricMeterTypeRegistry.lookup(this.name);
 
+        /*
         if (kafkaMetricMeterType.getMeterType() == MeterType.GAUGE) {
             Object metricValue = kafkaMetric.metricValue();
             if (metricValue instanceof Number) {
@@ -150,6 +151,13 @@ public class KafkaMetricMeterTypeBuilder {
                         .baseUnit(kafkaMetricMeterType.getBaseUnit())
                         .register(meterRegistry));
             }
+         */
+        if (kafkaMetricMeterType.getMeterType() == MeterType.GAUGE) {
+            return Optional.of(Gauge.builder(getMetricName(), () -> (Number) kafkaMetric.metricValue())
+                    .tags(tagFunction.apply(kafkaMetric.metricName()))
+                    .description(kafkaMetricMeterType.getDescription())
+                    .baseUnit(kafkaMetricMeterType.getBaseUnit())
+                    .register(meterRegistry));
         } else if (kafkaMetricMeterType.getMeterType() == MeterType.FUNCTION_COUNTER && this.kafkaMetric.metricValue() instanceof Double) {
             return Optional.of(FunctionCounter.builder(getMetricName(), kafkaMetric, value -> (Double) value.metricValue())
                     .tags(tagFunction.apply(kafkaMetric.metricName()))

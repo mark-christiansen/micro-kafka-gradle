@@ -21,6 +21,10 @@ alerting:
             - "alertmanager:9093"
 
 scrape_configs:
+  - job_name: "cadvisor"
+    static_configs:
+      - targets:
+          - cadvisor.mycompany.com:8080
   - job_name: "prometheus"
     static_configs:
       - targets:
@@ -29,7 +33,10 @@ scrape_configs:
     metrics_path: "/prometheus"
     static_configs:
       - targets:
-          - streams.mycompany.com:8080
+          - account-contact-stream-1.mycompany.com:8080
+          - account-stream-1.mycompany.com:8080
+          - contact-address-stream-1.mycompany.com:8080
+          - contact-stream-1.mycompany.com:8080
     relabel_configs:
       - source_labels: [__address__]
         target_label: hostname

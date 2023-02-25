@@ -140,6 +140,23 @@ services:
       - bash
       - -c
       - |
+        cd /scripts/ops
+        
+        echo 'create source topics'
+        ./create-topic.sh 'source.account' 5
+        ./create-topic.sh 'source.accountcontact' 5
+        ./create-topic.sh 'source.contact' 5
+        ./create-topic.sh 'source.contactaddress' 5
+        ./create-topic.sh 'source.contactrole' 1
+        ./create-topic.sh 'source.country' 1
+        ./create-topic.sh 'source.state' 1
+        
+        echo 'create canonical topics'
+        ./create-topic.sh 'canonical.account' 5
+        ./create-topic.sh 'canonical.accountcontact' 5
+        ./create-topic.sh 'canonical.contact' 5
+        ./create-topic.sh 'canonical.contactaddress' 5
+        
         touch /tmp/initialized
         tail -f /dev/null
     volumes:
@@ -177,18 +194,18 @@ services:
     hostname: producer
     container_name: producer
     links:
-      - schema1
+      - client
     depends_on:
-      schema1:
+      client:
         condition: service_healthy
     ports:
       - "8800:8080"
     environment:
       ACCOUNT_CONTACT_TOPIC: source.accountcontact
       ACCOUNT_TOPIC: source.account
-      ACCOUNTS: 100
+      ACCOUNTS: 10000
       ADDRESSES_PER_CONTACT: 1
-      BATCH_SIZE: 10
+      BATCH_SIZE: 500
       BOOTSTRAP_URL: kafka1:29092
       CANONICAL_ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
       CANONICAL_ACCOUNT_TOPIC: canonical.account
@@ -222,9 +239,9 @@ services:
     hostname: contact-address-stream-1
     container_name: contact-address-stream-1
     links:
-      - producer
+      - client
     depends_on:
-      producer:
+      client:
         condition: service_healthy
     ports:
       - "8801:8080"
@@ -256,9 +273,9 @@ services:
     hostname: contact-stream-1
     container_name: contact-stream-1
     links:
-      - producer
+      - client
     depends_on:
-      producer:
+      client:
         condition: service_healthy
     ports:
       - "8802:8080"
@@ -289,9 +306,9 @@ services:
     hostname: account-contact-stream-1
     container_name: account-contact-stream-1
     links:
-      - producer
+      - client
     depends_on:
-      producer:
+      client:
         condition: service_healthy
     ports:
       - "8803:8080"
@@ -323,9 +340,9 @@ services:
     hostname: account-stream-1
     container_name: account-stream-1
     links:
-      - producer
+      - client
     depends_on:
-      producer:
+      client:
         condition: service_healthy
     ports:
       - "8804:8080"

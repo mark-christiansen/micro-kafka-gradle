@@ -2,6 +2,8 @@ package com.mycompany.kafka.streams.metrics;
 
 import io.micronaut.configuration.kafka.config.AbstractKafkaConfiguration;
 import io.micronaut.context.ApplicationContext;
+import org.apache.kafka.common.Metric;
+import org.apache.kafka.common.MetricName;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
@@ -11,7 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import static java.lang.String.format;
 
@@ -74,6 +78,11 @@ public class KafkaStreamConfiguration extends AbstractKafkaConfiguration {
     public void start() {
         log.info("Starting Kafka Streams application {}", applicationId);
         stream.start();
+        Map<MetricName, ? extends Metric> metrics = stream.metrics();
+        for (MetricName metricName : metrics.keySet()) {
+            Metric metric = metrics.get(metricName);
+            log.info("{}: {}", metric.metricName(), metric.metricValue());
+        }
         log.info("Started Kafka Streams application {}", applicationId);
     }
 

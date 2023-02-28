@@ -219,21 +219,27 @@ services:
       ACCOUNT_CONTACT_TOPIC: source.accountcontact
       ACCOUNT_TOPIC: source.account
       ACCOUNTS: 1000000
+      ACKS: all
       ADDRESSES_PER_CONTACT: 1
-      BATCH_SIZE: 500
+      BATCH_SIZE: 1000
       BOOTSTRAP_URL: kafka1:29092
       CANONICAL_ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
       CANONICAL_ACCOUNT_TOPIC: canonical.account
       CANONICAL_CONTACT_ADDRESS_TOPIC: canonical.contactaddress
       CANONICAL_CONTACT_TOPIC: canonical.contact
       CLIENT_ID: producer
+      COMPRESSION_TYPE: lz4
       CONTACT_ADDRESS_TOPIC: source.contactaddress
       CONTACT_ROLE_TOPIC: source.contactrole
       CONTACT_TOPIC: source.contact
       CONTACTS_PER_ACCOUNT: 1
       COUNTRY_TOPIC: source.country
+      ENABLE_IDEMPOTENCE: true
       FREQUENCY_MS: 100
+      LINGER_MS: 100
       LOAD_SCHEMAS_FROM_CLASSPATH: false
+      MAX_IN_FLIGHT_REQUESTS: 1
+      MAX_REQUEST_SIZE: 100000
       PARTITIONS: 5
       SCHEMA_URL: http://schema1:8081
       SCHEMAS_PATH: /schemas
@@ -270,12 +276,18 @@ services:
       - "8801:8080"
     environment:
       APP_ID: contact-address-stream-1
+      BATCH_SIZE: 100000
       BOOTSTRAP_URL: kafka1:29092
+      BUFFER_MEMORY: 33554432
       CONTACT_ADDRESS_TOPIC: source.contactaddress
       COUNTRY_TOPIC: source.country
       ERROR_TOPIC: error.contactaddress
+      FETCH_MIN_BYTES: 100000
+      FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-address-stream-1
       IN_MEMORY_STATE: false
+      LINGER_MS: 500
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.contactaddress
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
@@ -312,12 +324,18 @@ services:
       - "8802:8080"
     environment:
       APP_ID: contact-stream-1
+      BATCH_SIZE: 1000
       BOOTSTRAP_URL: kafka1:29092
+      BUFFER_MEMORY: 33554432
       CONTACT_TOPIC: source.contact
       CONTACT_ADDRESS_TOPIC: canonical.contactaddress
       ERROR_TOPIC: error.contact
+      FETCH_MIN_BYTES: 100000
+      FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-stream-1
       IN_MEMORY_STATE: false
+      LINGER_MS: 500
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.contact
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
@@ -354,12 +372,18 @@ services:
     environment:
       ACCOUNT_CONTACT_TOPIC: source.accountcontact
       APP_ID: account-contact-stream-1
+      BATCH_SIZE: 1000
       BOOTSTRAP_URL: kafka1:29092
+      BUFFER_MEMORY: 33554432
       CONTACT_ROLE_TOPIC: source.contactrole
       CONTACT_TOPIC: canonical.contact
       ERROR_TOPIC: error.accountcontact
+      FETCH_MIN_BYTES: 100000
+      FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-contact-stream-1
       IN_MEMORY_STATE: false
+      LINGER_MS: 500
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.accountcontact
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
@@ -396,12 +420,18 @@ services:
     environment:
       ACCOUNT_CONTACT_TOPIC: source.accountcontact
       APP_ID: account-contact-stream-2
+      BATCH_SIZE: 1000
       BOOTSTRAP_URL: kafka1:29092
+      BUFFER_MEMORY: 33554432
       CONTACT_ROLE_TOPIC: source.contactrole
       CONTACT_TOPIC: canonical.contact
       ERROR_TOPIC: error.accountcontact
+      FETCH_MIN_BYTES: 100000
+      FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-contact-stream-2
       IN_MEMORY_STATE: false
+      LINGER_MS: 500
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.accountcontact
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
@@ -439,10 +469,16 @@ services:
       ACCOUNT_TOPIC: source.account
       ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
       APP_ID: account-stream-1
+      BATCH_SIZE: 1000
       BOOTSTRAP_URL: kafka1:29092
+      BUFFER_MEMORY: 33554432
       ERROR_TOPIC: error.account
+      FETCH_MIN_BYTES: 100000
+      FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-stream-1
       IN_MEMORY_STATE: false
+      LINGER_MS: 500
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.account
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
@@ -480,10 +516,16 @@ services:
       ACCOUNT_TOPIC: source.account
       ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
       APP_ID: account-stream-2
+      BATCH_SIZE: 1000
       BOOTSTRAP_URL: kafka1:29092
+      BUFFER_MEMORY: 33554432
       ERROR_TOPIC: error.account
+      FETCH_MIN_BYTES: 100000
+      FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-stream-2
       IN_MEMORY_STATE: false
+      LINGER_MS: 500
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.account
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data

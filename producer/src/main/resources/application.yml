@@ -31,23 +31,24 @@ kafka:
     security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT} 
   producer:
     # reduce to 1 for lower latency
-    acks: all    
+    acks: ${ACKS:all}    
     avro.use.logical.type.converters: true
     basic.auth.credentials.source: USER_INFO
     basic.auth.user.info: ${SCHEMA_USERNAME:}:${SCHEMA_PASSWORD:}
     # increase for higher throughput
-    batch.size: ${BATCH_SIZE:16384}
+    batch.size: ${MAX_REQUEST_SIZE:16384}
     bootstrap.servers: ${BOOTSTRAP_URL}
     buffer.memory: ${BUFFER_MEMORY:33554432}
     client.id: ${CLIENT_ID}
     # none for lower latency, lz4 for higher throughput
-    compression.type: lz4
+    compression.type: ${COMPRESSION_TYPE:lz4}
+    enable.idempotence: ${ENABLE_IDEMPOTENCE:true}
     key.serializer: org.apache.kafka.common.serialization.LongSerializer
     key.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
     # higher for more throughput (ms), 0 for less latency
     linger.ms: ${LINGER_MS:0}
     # prevent out of order messages when not using an idempotent producer
-    max.in.flight.requests.per.connection: 1
+    max.in.flight.requests.per.connection: ${MAX_IN_FLIGHT_REQUESTS:1}
     sasl.mechanism: ${SASL_MECHANISM:PLAIN}
     sasl.jaas.config: >-
       org.apache.kafka.common.security.plain.PlainLoginModule required

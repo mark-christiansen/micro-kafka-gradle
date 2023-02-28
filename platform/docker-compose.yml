@@ -218,10 +218,10 @@ services:
     environment:
       ACCOUNT_CONTACT_TOPIC: source.accountcontact
       ACCOUNT_TOPIC: source.account
-      ACCOUNTS: 1000000
+      ACCOUNTS: 10000
       ACKS: all
       ADDRESSES_PER_CONTACT: 1
-      BATCH_SIZE: 1000
+      BATCH_SIZE: 500
       BOOTSTRAP_URL: kafka1:29092
       CANONICAL_ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
       CANONICAL_ACCOUNT_TOPIC: canonical.account
@@ -235,7 +235,7 @@ services:
       CONTACTS_PER_ACCOUNT: 1
       COUNTRY_TOPIC: source.country
       ENABLE_IDEMPOTENCE: true
-      FREQUENCY_MS: 100
+      FREQUENCY_MS: 500
       LINGER_MS: 100
       LOAD_SCHEMAS_FROM_CLASSPATH: false
       MAX_IN_FLIGHT_REQUESTS: 1

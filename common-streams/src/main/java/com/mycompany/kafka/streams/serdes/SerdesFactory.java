@@ -40,7 +40,7 @@ public class SerdesFactory {
         }
 
         return new CachedSchemaRegistryClient((String) streamsProps.get(SCHEMA_REGISTRY_URL),
-                (Integer) streamsProps.get(SCHEMA_CACHE_CAPACITY), schemaProps);
+                Integer.parseInt((String) streamsProps.get(SCHEMA_CACHE_CAPACITY)), schemaProps);
     }
 
     @Singleton

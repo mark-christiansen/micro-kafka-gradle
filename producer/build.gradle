@@ -19,7 +19,7 @@ tasks.named("dockerBuildNative") {
 }
 
 tasks.named("dockerfileNative") {
-    args("-Xms1g", "-Xmx1g")
+    args("-Xms2g", "-Xmx2g")
     instruction """HEALTHCHECK CMD wget -q -O - http://localhost:8080/health | grep -e '"status":"UP"'"""
 }
 

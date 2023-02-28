@@ -28,6 +28,7 @@ public abstract class AbstractProducer implements Callable<Boolean> {
     private final int batchSize;
     private final long frequencyMs;
     protected final Map<String, Set<Object>> uniqueValues = new HashMap<>();
+    private List<GenericRecord> records;
 
     public AbstractProducer(Producer<Long, GenericRecord> producer,
                             SchemaLoader schemaLoader,
@@ -50,16 +51,18 @@ public abstract class AbstractProducer implements Callable<Boolean> {
 
         Schema schema = schemaLoader.getSchema(schemaName);
         long count = 0;
+        records = new ArrayList<>(batchSize);
         try {
             while (count < messages) {
                 long currentBatch = count + batchSize < messages ? batchSize : messages - count;
-                List<GenericRecord> records = generate(schema, count, (int) currentBatch);
+                generate(schema, count, (int) currentBatch);
                 for (GenericRecord record : records) {
                     producer.send(new ProducerRecord<>(topicName, (Long) record.get(ID_FIELD), record));
                 }
                 producer.flush();
                 log.info("Produced {} messages", batchSize);
                 count += batchSize;
+                records.clear();
                 try {
                     Thread.sleep(frequencyMs);
                 } catch (InterruptedException ignored) {}
@@ -87,11 +90,9 @@ public abstract class AbstractProducer implements Callable<Boolean> {
         return value;
     }
 
-    private List<GenericRecord> generate(Schema schema, long count, int batchSize) {
-        List<GenericRecord> records = new ArrayList<>(batchSize);
+    private void generate(Schema schema, long count, int batchSize) {
         for (long i = 0; i < batchSize; i++) {
             records.add(generate(count + i, schema));
         }
-        return records;
     }
 }

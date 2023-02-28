@@ -15,7 +15,7 @@ tasks.named("dockerBuildNative") {
 
 tasks.named("dockerfileNative") {
     baseImage('com.mycompany/debian:bookworm-slim')
-    args("-Xms500m", "-Xmx500m")
+    args("--gc=G1", "-Xms500m", "-Xmx500m")
     instruction """HEALTHCHECK CMD wget -q -O - http://localhost:8080/health | grep -e '"status":"UP"'"""
 }
 

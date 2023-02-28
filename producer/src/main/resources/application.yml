@@ -1,53 +1,53 @@
 application:
-  account.topic: ${ACCOUNT_TOPIC}
   account.contact.topic: ${ACCOUNT_CONTACT_TOPIC}
-  contact.topic: ${CONTACT_TOPIC}
-  contact.address.topic: ${CONTACT_ADDRESS_TOPIC}
-  contact.role.topic: ${CONTACT_ROLE_TOPIC}
-  state.topic: ${STATE_TOPIC}
-  country.topic: ${COUNTRY_TOPIC}
-  canonical.account.topic: ${CANONICAL_ACCOUNT_TOPIC}
-  canonical.account.contact.topic: ${CANONICAL_ACCOUNT_CONTACT_TOPIC}
-  canonical.contact.topic: ${CANONICAL_CONTACT_TOPIC}
-  canonical.contact.address.topic: ${CANONICAL_CONTACT_ADDRESS_TOPIC}
-  partitions: ${PARTITIONS:1}
+  account.topic: ${ACCOUNT_TOPIC}
   accounts: ${ACCOUNTS}
-  contacts.per.account: ${CONTACTS_PER_ACCOUNT:1}
   addresses.per.contact: ${ADDRESSES_PER_CONTACT:1}
   batch.size: ${BATCH_SIZE}
+  canonical.account.contact.topic: ${CANONICAL_ACCOUNT_CONTACT_TOPIC}
+  canonical.account.topic: ${CANONICAL_ACCOUNT_TOPIC}
+  canonical.contact.address.topic: ${CANONICAL_CONTACT_ADDRESS_TOPIC}
+  canonical.contact.topic: ${CANONICAL_CONTACT_TOPIC}
+  contact.address.topic: ${CONTACT_ADDRESS_TOPIC}
+  contact.role.topic: ${CONTACT_ROLE_TOPIC}
+  contact.topic: ${CONTACT_TOPIC}
+  contacts.per.account: ${CONTACTS_PER_ACCOUNT:1}
+  country.topic: ${COUNTRY_TOPIC}
   frequency.ms: ${FREQUENCY_MS:1000}
-  schemas.path: ${SCHEMAS_PATH:schemas/source}
   load.schemas.from.classpath: ${LOAD_SCHEMAS_FROM_CLASSPATH:true}
+  partitions: ${PARTITIONS:1}
+  schemas.path: ${SCHEMAS_PATH:schemas/source}
+  state.topic: ${STATE_TOPIC}
   threads: ${THREADS:5}
 kafka:
   admin:
-    client.id: ${CLIENT_ID}-admin
     bootstrap.servers: ${BOOTSTRAP_URL}
-    security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT}
+    client.id: ${CLIENT_ID}-admin
     sasl.mechanism: ${SASL_MECHANISM:PLAIN}
     sasl.jaas.config: >-
       org.apache.kafka.common.security.plain.PlainLoginModule required
       username="${SASL_USERNAME:}"
       password="${SASL_PASSWORD:}";
+    security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT} 
   producer:
-    client.id: ${CLIENT_ID}
+    # reduce to 1 for lower latency
+    acks: all    
+    avro.use.logical.type.converters: true
+    basic.auth.credentials.source: USER_INFO
+    basic.auth.user.info: ${SCHEMA_USERNAME:}:${SCHEMA_PASSWORD:}
     # increase for higher throughput
-    batch.size: 1
+    batch.size: ${BATCH_SIZE:16384}
+    bootstrap.servers: ${BOOTSTRAP_URL}
+    buffer.memory: ${BUFFER_MEMORY:33554432}
+    client.id: ${CLIENT_ID}
     # none for lower latency, lz4 for higher throughput
     compression.type: lz4
+    key.serializer: org.apache.kafka.common.serialization.LongSerializer
+    key.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
+    # higher for more throughput (ms), 0 for less latency
+    linger.ms: ${LINGER_MS:0}
     # prevent out of order messages when not using an idempotent producer
     max.in.flight.requests.per.connection: 1
-    # higher for more throughput (ms), 0 for less latency
-    linger.ms: 0
-    # reduce to 1 for lower latency
-    acks: all
-    avro.use.logical.type.converters: true
-    key.serializer: org.apache.kafka.common.serialization.LongSerializer
-    value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-    key.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
-    value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
-    bootstrap.servers: ${BOOTSTRAP_URL}
-    security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT}
     sasl.mechanism: ${SASL_MECHANISM:PLAIN}
     sasl.jaas.config: >-
       org.apache.kafka.common.security.plain.PlainLoginModule required
@@ -55,8 +55,9 @@ kafka:
       password="${SASL_PASSWORD:}";
     schema.registry.url: ${SCHEMA_URL}
     schema.registry.auth: ${SCHEMA_AUTH:false}
-    basic.auth.credentials.source: USER_INFO
-    basic.auth.user.info: ${SCHEMA_USERNAME:}:${SCHEMA_PASSWORD:}
+    security.protocol: ${SECURITY_PROTOCOL:PLAINTEXT}
+    value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
 micronaut:
   application:
     name: producer

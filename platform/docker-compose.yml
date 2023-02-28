@@ -35,6 +35,14 @@ services:
       nofile:
         soft: 82920
         hard: 82920
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: "5G"
+        reservations:
+          cpus: "2.0"
+          memory: "2G"
     links:
       - zoo1
     depends_on:
@@ -76,7 +84,7 @@ services:
       #KAFKA_OPTS: '-Djavax.net.debug=ssl'
       #KAFKA_JMX_PORT: 9010
       #KAFKA_JMX_HOSTNAME: localhost
-      KAFKA_HEAP_OPTS: "-Xms${BROKER_HEAP} -Xmx${BROKER_HEAP}"
+      KAFKA_HEAP_OPTS: "-Xms3G -Xmx3G"
     volumes:
       - ./volumes/kafka-1/data:/var/lib/kafka/data
     networks:
@@ -92,6 +100,14 @@ services:
     image: confluentinc/cp-schema-registry:${CONFLUENT_VERSION}
     hostname: schema1.${DOMAIN}
     container_name: schema1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "256M"
     links:
       - kafka1
     depends_on:
@@ -131,6 +147,14 @@ services:
     build: ./client
     hostname: client.${DOMAIN}
     container_name: client
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "256M"
     links:
       - schema1
     depends_on:
@@ -170,29 +194,20 @@ services:
       timeout: 15s
       retries: 30
 
-  ################## DATABASE ##################
-
-  postgres:
-    image: postgres:latest
-    hostname: postgres
-    container_name: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./volumes/postgres/data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: cda
-      POSTGRES_USER: kafka-connect-user
-      POSTGRES_PASSWORD: K@fk@Conn3ct!
-    networks:
-      - kafka-network
-
   ################## CLIENTS ##################
 
   producer:
     image: com.mycompany/kafka-producer:1.0-SNAPSHOT
     hostname: producer
     container_name: producer
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2G"
+        reservations:
+          cpus: "1.0"
+          memory: "1G"
     links:
       - client
     depends_on:
@@ -203,7 +218,7 @@ services:
     environment:
       ACCOUNT_CONTACT_TOPIC: source.accountcontact
       ACCOUNT_TOPIC: source.account
-      ACCOUNTS: 10000
+      ACCOUNTS: 1000000
       ADDRESSES_PER_CONTACT: 1
       BATCH_SIZE: 500
       BOOTSTRAP_URL: kafka1:29092
@@ -238,6 +253,14 @@ services:
     image: com.mycompany/contact-address-stream:1.0-SNAPSHOT
     hostname: contact-address-stream-1
     container_name: contact-address-stream-1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.50"
+          memory: "512M"
     links:
       - client
     depends_on:
@@ -272,6 +295,14 @@ services:
     image: com.mycompany/contact-stream:1.0-SNAPSHOT
     hostname: contact-stream-1
     container_name: contact-stream-1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.50"
+          memory: "512M"
     links:
       - client
     depends_on:
@@ -305,6 +336,14 @@ services:
     image: com.mycompany/account-contact-stream:1.0-SNAPSHOT
     hostname: account-contact-stream-1
     container_name: account-contact-stream-1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.50"
+          memory: "512M"
     links:
       - client
     depends_on:
@@ -335,10 +374,60 @@ services:
       timeout: 10s
       retries: 10
 
+  account-contact-stream-2:
+    image: com.mycompany/account-contact-stream:1.0-SNAPSHOT
+    hostname: account-contact-stream-2
+    container_name: account-contact-stream-2
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.50"
+          memory: "512M"
+    links:
+      - client
+    depends_on:
+      client:
+        condition: service_healthy
+    ports:
+      - "8805:8080"
+    environment:
+      ACCOUNT_CONTACT_TOPIC: source.accountcontact
+      APP_ID: account-contact-stream-2
+      BOOTSTRAP_URL: kafka1:29092
+      CONTACT_ROLE_TOPIC: source.contactrole
+      CONTACT_TOPIC: canonical.contact
+      ERROR_TOPIC: error.accountcontact
+      GROUP_ID: account-contact-stream-2
+      IN_MEMORY_STATE: false
+      OUTPUT_TOPIC: canonical.accountcontact
+      SCHEMA_URL: http://schema1:8081
+      STATE_DIR: /data
+      STATE_STORE_CLEANUP: false
+    volumes:
+      - ./volumes/account-contact-stream-2/data:/data
+    networks:
+      - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
   account-stream-1:
     image: com.mycompany/account-stream:1.0-SNAPSHOT
     hostname: account-stream-1
     container_name: account-stream-1
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.50"
+          memory: "512M"
     links:
       - client
     depends_on:
@@ -360,6 +449,47 @@ services:
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-stream-1/data:/data
+    networks:
+      - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
+  account-stream-2:
+    image: com.mycompany/account-stream:1.0-SNAPSHOT
+    hostname: account-stream-2
+    container_name: account-stream-2
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+        reservations:
+          cpus: "0.50"
+          memory: "512M"
+    links:
+      - client
+    depends_on:
+      client:
+        condition: service_healthy
+    ports:
+      - "8806:8080"
+    environment:
+      ACCOUNT_TOPIC: source.account
+      ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
+      APP_ID: account-stream-2
+      BOOTSTRAP_URL: kafka1:29092
+      ERROR_TOPIC: error.account
+      GROUP_ID: account-stream-2
+      IN_MEMORY_STATE: false
+      OUTPUT_TOPIC: canonical.account
+      SCHEMA_URL: http://schema1:8081
+      STATE_DIR: /data
+      STATE_STORE_CLEANUP: false
+    volumes:
+      - ./volumes/account-stream-2/data:/data
     networks:
       - kafka-network
     healthcheck:

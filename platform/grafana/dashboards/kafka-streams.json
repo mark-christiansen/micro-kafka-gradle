@@ -3,28 +3,41 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "limit": 100,
         "name": "Annotations & Alerts",
         "showIn": 0,
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "Dashboard for a Kafka Streams application using Prometheus JMX-Exporter running in Kubernetes",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 13966,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1614238914584,
+  "id": 2,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -33,17 +46,28 @@
       },
       "id": 40,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Node Metrics",
       "type": "row"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "noValue": "0",
           "thresholds": {
@@ -85,9 +109,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
           "expr": "count(kafka_streams_application_id)",
           "instant": false,
           "interval": "",
@@ -95,19 +124,19 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Running Instances",
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -148,9 +177,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
           "expr": "sum(kafka_streams_task_created_total) - sum(kafka_streams_task_closed_total)",
           "instant": false,
           "interval": "",
@@ -158,314 +192,23 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Currently Running Tasks",
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {
-            "align": null,
-            "displayMode": "auto",
-            "filterable": false
-          },
-          "mappings": [],
-          "noValue": "-",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": []
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "app"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 115
-              },
-              {
-                "id": "custom.align",
-                "value": "right"
-              },
-              {
-                "id": "custom.filterable",
-                "value": true
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "instance"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 136
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Status"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "from": "80",
-                    "id": 1,
-                    "text": "Running",
-                    "to": "100000000000000000000000000000000",
-                    "type": 2
-                  },
-                  {
-                    "from": "0",
-                    "id": 2,
-                    "text": "Probybly not Running",
-                    "to": "80",
-                    "type": 2,
-                    "value": ""
-                  },
-                  {
-                    "from": "",
-                    "id": 3,
-                    "text": "Not Running",
-                    "to": "",
-                    "type": 1,
-                    "value": "null"
-                  }
-                ]
-              },
-              {
-                "id": "color"
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-background"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "red",
-                      "value": null
-                    },
-                    {
-                      "color": "green",
-                      "value": 80
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              },
-              {
-                "id": "custom.filterable",
-                "value": true
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Uptime (d hh:mm:ss)"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "dtdhms"
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-background"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "id": 30,
-      "options": {
-        "frameIndex": 0,
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "exemplar": false,
-          "expr": "kafka_streams_kafka_metrics_count_count{app=~\"$App\",instance=~\"${Instance:pipe}\"}",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{app}}@{{instance}}",
-          "refId": "A"
-        },
-        {
-          "expr": "java_lang_Runtime_Uptime{app=~\"$App\",instance=~\"${Instance:pipe}\"} / 1000",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{app}}@{{instance}}",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Instances",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        },
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Value #A": {
-                "aggregations": [
-                  "lastNotNull"
-                ],
-                "operation": "aggregate"
-              },
-              "Value #B": {
-                "aggregations": [
-                  "lastNotNull"
-                ],
-                "operation": "aggregate"
-              },
-              "app": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "instance": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "Value #A (lastNotNull)": "Status",
-              "Value #B (lastNotNull)": "Uptime (d hh:mm:ss)"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              },
-              {
-                "color": "light-blue",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 12,
-        "x": 12,
-        "y": 7
-      },
-      "id": 44,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "expr": "sum(kafka_admin_client_admin_client_metrics_outgoing_byte_total{app=~\"${App:pipe}.*\",instance=~\"${Instance:pipe}\"})",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "Outgoing Network",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(kafka_admin_client_admin_client_metrics_incoming_byte_total{app=~\"${App:pipe}.*\",instance=~\"${Instance:pipe}\"})",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "Incoming Network",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "transformations": [],
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 100,
-          "thresholds": {
-            "mode": "percentage",
             "steps": [
               {
                 "color": "green",
@@ -477,60 +220,62 @@
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 4,
-        "x": 0,
-        "y": 9
+        "w": 12,
+        "x": 12,
+        "y": 1
       },
-      "id": 36,
+      "id": 48,
       "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
+        "showUnfilled": true
       },
-      "pluginVersion": "7.4.2",
-      "repeat": null,
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "expr": "sum(java_lang_MemoryPool_Usage_used{app=~\"$App\",instance=~\"${Instance:pipe}\"}) / sum(java_lang_OperatingSystem_TotalPhysicalMemorySize{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
-          "instant": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "time() - container_start_time_seconds{name=~\".*-stream-.*\"}",
           "interval": "",
-          "legendFormat": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{name}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total Memory Usage",
+      "title": "Uptime",
       "transformations": [],
-      "type": "gauge"
+      "type": "bargauge"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": {},
-          "custom": {},
-          "thresholds": {
-            "mode": "absolute",
-            "steps": []
-          },
           "unit": "decbytes"
         },
         "overrides": []
@@ -539,12 +284,12 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 8,
-        "x": 4,
+        "w": 12,
+        "x": 0,
         "y": 9
       },
       "hiddenSeries": false,
-      "id": 48,
+      "id": 51,
       "legend": {
         "avg": false,
         "current": false,
@@ -561,7 +306,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -571,17 +316,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (app,instance) (java_lang_MemoryPool_Usage_used{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "container_memory_usage_bytes{name=~\".*-stream-.*\"}/(1024*1024)",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{app}}@{{instance}}",
+          "legendFormat": "{{name}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Memory Usage",
       "tooltip": {
         "shared": true,
@@ -591,9 +340,7 @@
       "transformations": [],
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -601,107 +348,40 @@
         {
           "$$hashKey": "object:508",
           "format": "decbytes",
-          "label": null,
+          "label": "bytes (SI)",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:509",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "max": 100,
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 4,
-        "x": 12,
-        "y": 9
-      },
-      "id": 34,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "expr": "avg(java_lang_OperatingSystem_ProcessCpuLoad{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Average CPU Load of all Nodes",
-      "type": "gauge"
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "percentunit"
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 8,
-        "x": 16,
+        "w": 12,
+        "x": 12,
         "y": 9
       },
       "hiddenSeries": false,
@@ -722,7 +402,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -732,17 +412,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "java_lang_OperatingSystem_ProcessCpuLoad{app=~\"$App\",instance=~\"${Instance:pipe}\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "rate(container_cpu_usage_seconds_total{name=~\".*-stream-.*\"}[5m])",
           "interval": "",
-          "legendFormat": "{{app}}@{{instance}}",
+          "legendFormat": "{{name}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
-      "title": "CPU Load",
+      "title": "CPU Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -750,40 +434,35 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:87",
-          "format": "percentunit",
-          "label": null,
+          "format": "none",
+          "label": "cores",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:88",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -792,17 +471,28 @@
       },
       "id": 42,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Streams Metrics",
       "type": "row"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -843,40 +533,60 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "expr": "sum(kafka_streams_stream_thread_metrics_process_total{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(kafka_streams_process_total{hostname=~\".*-stream-.*\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Processed Records",
           "refId": "A"
         },
         {
-          "expr": "sum(kafka_streams_stream_thread_metrics_poll_total{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(kafka_streams_poll_total{hostname=~\".*-stream-.*\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Polls",
+          "range": true,
           "refId": "B"
         },
         {
-          "expr": "sum(kafka_streams_stream_thread_metrics_commit_total{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(kafka_streams_commit_total{hostname=~\".*-stream-.*\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Commits",
+          "range": true,
           "refId": "C"
         },
         {
-          "expr": "sum(kafka_streams_stream_thread_metrics_task_created_total{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(kafka_streams_task_created_total{hostname=~\".*-stream-.*\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Created Tasks",
+          "range": true,
           "refId": "D"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
       "type": "stat"
     },
     {
@@ -884,10 +594,174 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 25
+      },
+      "hiddenSeries": false,
+      "id": 49,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "kafka_streams_records_lag_avg_records",
+          "interval": "",
+          "legendFormat": "{{hostname}} -> {{topic}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Consumer Lag",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:87",
+          "format": "none",
+          "label": "records",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:88",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 25
+      },
+      "id": 50,
+      "options": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "kafka_streams_process_total/1000",
+          "interval": "",
+          "legendFormat": "{{hostname}} ",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Records Processed (K recs)",
+      "type": "bargauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
           "unit": "ms"
         },
         "overrides": []
@@ -898,7 +772,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 14,
@@ -918,7 +792,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -928,22 +802,32 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(kafka_streams_stream_processor_node_metrics_record_e2e_latency_max{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "max(kafka_streams_record_e2e_latency_max)",
           "interval": "",
           "legendFormat": "Max Record E2E Latency",
+          "range": true,
           "refId": "A"
         },
         {
-          "expr": "min(kafka_streams_stream_processor_node_metrics_record_e2e_latency_min{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "min(kafka_streams_record_e2e_latency_min)",
           "interval": "",
           "legendFormat": "Min Record E2E Latency",
+          "range": true,
           "refId": "B"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Record E2E Latency",
       "tooltip": {
         "shared": true,
@@ -952,9 +836,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -962,25 +844,18 @@
         {
           "$$hashKey": "object:329",
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:330",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -988,10 +863,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "unit": "short"
         },
         "overrides": []
@@ -1002,7 +879,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 25
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 16,
@@ -1022,7 +899,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1032,22 +909,32 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(kafka_streams_stream_thread_metrics_poll_records_max{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "kafka_streams_poll_rate",
           "interval": "",
-          "legendFormat": "Max Poll",
+          "legendFormat": "{{hostname}}",
+          "range": true,
           "refId": "A"
         },
         {
-          "expr": "avg(kafka_streams_stream_thread_metrics_poll_records_avg{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "avg(kafka_streams_poll_records_avg)",
           "interval": "",
-          "legendFormat": "Avg Poll",
+          "legendFormat": "Average",
+          "range": true,
           "refId": "B"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Poll Records",
       "tooltip": {
         "shared": true,
@@ -1056,9 +943,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1066,25 +951,18 @@
         {
           "$$hashKey": "object:244",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:245",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1092,10 +970,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "unit": "ms"
         },
         "overrides": []
@@ -1106,7 +986,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 33
+        "y": 41
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1126,7 +1006,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1136,22 +1016,32 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(kafka_streams_stream_thread_metrics_process_latency_max{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "max(kafka_streams_process_latency_max)",
           "interval": "",
           "legendFormat": "Max Process Latency",
+          "range": true,
           "refId": "A"
         },
         {
-          "expr": "avg(kafka_streams_stream_thread_metrics_process_latency_avg{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "avg(kafka_streams_process_latency_avg)",
           "interval": "",
           "legendFormat": "Avg Process Latency",
+          "range": true,
           "refId": "B"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Process Latency",
       "tooltip": {
         "shared": true,
@@ -1160,9 +1050,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1170,25 +1058,18 @@
         {
           "$$hashKey": "object:414",
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:415",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1196,12 +1077,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "ops"
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1210,7 +1091,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 41
       },
       "hiddenSeries": false,
       "id": 24,
@@ -1232,7 +1113,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1242,16 +1123,20 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kafka_streams_stream_thread_metrics_process_rate{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "kafka_streams_process_rate",
           "interval": "",
-          "legendFormat": "Thread Process Rate",
+          "legendFormat": "{{hostname}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Process Rate",
       "tooltip": {
         "shared": true,
@@ -1260,35 +1145,27 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:499",
-          "format": "ops",
-          "label": null,
+          "format": "none",
+          "label": "records/sec",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:500",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1296,10 +1173,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "unit": "ms"
         },
         "overrides": []
@@ -1310,7 +1189,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 41
+        "y": 49
       },
       "hiddenSeries": false,
       "id": 10,
@@ -1331,7 +1210,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1341,22 +1220,32 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(kafka_streams_stream_thread_metrics_poll_latency_max{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "max(kafka_streams_poll_latency_max)",
           "interval": "",
           "legendFormat": "Max Thread Poll Latency",
+          "range": true,
           "refId": "A"
         },
         {
-          "expr": "avg(kafka_streams_stream_thread_metrics_poll_latency_avg{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "avg(kafka_streams_poll_latency_avg)",
           "interval": "",
           "legendFormat": "Avg Thread Poll Latency",
+          "range": true,
           "refId": "B"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Poll Latency",
       "tooltip": {
         "shared": true,
@@ -1365,9 +1254,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1375,25 +1262,18 @@
         {
           "$$hashKey": "object:584",
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:585",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1401,12 +1281,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "unit": "ops"
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1415,7 +1295,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 41
+        "y": 49
       },
       "hiddenSeries": false,
       "id": 6,
@@ -1437,7 +1317,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1447,16 +1327,20 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kafka_streams_stream_thread_metrics_poll_rate{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "kafka_streams_poll_rate",
           "interval": "",
-          "legendFormat": "Thread Poll Rate",
+          "legendFormat": "{{hostname}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Poll Rate",
       "tooltip": {
         "shared": true,
@@ -1465,35 +1349,27 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "$$hashKey": "object:669",
-          "format": "ops",
-          "label": null,
+          "format": "none",
+          "label": "polls/sec",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:670",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1501,10 +1377,12 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "unit": "ms"
         },
         "overrides": []
@@ -1515,7 +1393,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 49
+        "y": 57
       },
       "hiddenSeries": false,
       "id": 8,
@@ -1537,7 +1415,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1547,22 +1425,32 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(kafka_streams_stream_thread_metrics_commit_latency_max{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "max(kafka_streams_commit_latency_max_seconds)",
           "interval": "",
           "legendFormat": "Max Thread Commit Latency",
+          "range": true,
           "refId": "A"
         },
         {
-          "expr": "avg(kafka_streams_stream_thread_metrics_commit_latency_avg{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "avg(kafka_streams_commit_latency_avg_seconds)",
           "interval": "",
           "legendFormat": "Avg Thread Commit Latency",
+          "range": true,
           "refId": "B"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Commit Latency",
       "tooltip": {
         "shared": true,
@@ -1571,9 +1459,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1581,25 +1467,18 @@
         {
           "$$hashKey": "object:754",
           "format": "ms",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:755",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1607,11 +1486,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "unit": "ops"
         },
         "overrides": []
@@ -1622,7 +1503,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 49
+        "y": 57
       },
       "hiddenSeries": false,
       "id": 4,
@@ -1644,7 +1525,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "9.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1654,16 +1535,20 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kafka_streams_stream_thread_metrics_commit_rate{app=~\"$App\",instance=~\"${Instance:pipe}\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "kafka_streams_commit_rate_commits",
           "interval": "",
-          "legendFormat": "Thread Commit Rate",
+          "legendFormat": "{{hostname}}",
+          "range": true,
           "refId": "A"
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Commit Rate",
       "tooltip": {
         "shared": true,
@@ -1672,9 +1557,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1682,30 +1565,24 @@
         {
           "$$hashKey": "object:839",
           "format": "ops",
-          "label": null,
+          "label": "commits/sec",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:840",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 27,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [
     "Kafka Streams",
@@ -1715,65 +1592,10 @@
     "Kafka"
   ],
   "templating": {
-    "list": [
-      {
-        "allValue": ".+",
-        "current": {},
-        "datasource": "Prometheus",
-        "definition": "label_values(kafka_streams_kafka_metrics_count_count,app)",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": true,
-        "name": "App",
-        "options": [],
-        "query": {
-          "query": "label_values(kafka_streams_kafka_metrics_count_count,app)",
-          "refId": "Prometheus-App-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": ".+",
-        "current": {},
-        "datasource": "Prometheus",
-        "definition": "label_values(kafka_streams_kafka_metrics_count_count{app=~\"${App:pipe}\"},instance)",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": true,
-        "label": null,
-        "multi": true,
-        "name": "Instance",
-        "options": [],
-        "query": {
-          "query": "label_values(kafka_streams_kafka_metrics_count_count{app=~\"${App:pipe}\"},instance)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      }
-    ]
+    "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1793,5 +1615,6 @@
   "timezone": "",
   "title": "Kafka Streams",
   "uid": "_ZbXJQYMz",
-  "version": 2
+  "version": 19,
+  "weekStart": ""
 }

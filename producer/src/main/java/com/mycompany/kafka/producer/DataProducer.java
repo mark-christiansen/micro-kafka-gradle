@@ -70,8 +70,8 @@ public class DataProducer {
         this.addressesPerContact = Long.parseLong((String) appConfig.get("addresses.per.contact"));
         this.batchSize = Integer.parseInt((String) appConfig.get("batch.size"));
         this.frequencyMs = Long.parseLong((String) appConfig.get("frequency.ms"));
-        this.executorService = new ThreadPoolExecutor(1, Integer.parseInt((String) appConfig.get("threads")),
-                0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        int threads = Integer.parseInt((String) appConfig.get("threads"));
+        this.executorService = Executors.newFixedThreadPool(threads);
     }
 
     public void start() throws InterruptedException {

@@ -2,7 +2,9 @@
 
 echo "Crete volumes"
 mkdir volumes/account-contact-stream-1
+mkdir volumes/account-contact-stream-2
 mkdir volumes/account-stream-1
+mkdir volumes/account-stream-2
 mkdir volumes/contact-address-stream-1
 mkdir volumes/contact-stream-1
 mkdir volumes/grafana

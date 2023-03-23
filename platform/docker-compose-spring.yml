@@ -177,11 +177,8 @@ services:
           memory: "256M"
     links:
       - kafka1
-      - kafka2
     depends_on:
       kafka1:
-        condition: service_healthy
-      kafka2:
         condition: service_healthy
     ports:
       - "8081:8081"
@@ -290,8 +287,8 @@ services:
 #      ACCOUNT_TOPIC: source.account
 #      ACCOUNTS: 1000000
 #      ACKS: all
-#      ADDRESSES_PER_CONTACT: 2
-#      BATCH_SIZE: 1000
+#      ADDRESSES_PER_CONTACT: 1
+#      BATCH_SIZE: 500
 #      BOOTSTRAP_URL: kafka1.${DOMAIN}:29092,kafka2.${DOMAIN}:29092
 #      CANONICAL_ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
 #      CANONICAL_ACCOUNT_TOPIC: canonical.account
@@ -302,14 +299,14 @@ services:
 #      CONTACT_ADDRESS_TOPIC: source.contactaddress
 #      CONTACT_ROLE_TOPIC: source.contactrole
 #      CONTACT_TOPIC: source.contact
-#      CONTACTS_PER_ACCOUNT: 2
+#      CONTACTS_PER_ACCOUNT: 1
 #      COUNTRY_TOPIC: source.country
 #      ENABLE_IDEMPOTENCE: true
 #      FREQUENCY_MS: 100
 #      LINGER_MS: 100
 #      LOAD_SCHEMAS_FROM_CLASSPATH: false
 #      MAX_IN_FLIGHT_REQUESTS: 1
-#      MAX_REQUEST_SIZE: 200000
+#      MAX_REQUEST_SIZE: 100000
 #      PARTITIONS: 5
 #      SCHEMA_URL: http://schema1:8081
 #      SCHEMAS_PATH: /schemas
@@ -326,7 +323,7 @@ services:
 #      retries: 10
 
   contact-address-stream-1:
-    image: com.mycompany/contact-address-stream:1.0-SNAPSHOT
+    image: com.mycompany/contact-address-stream-spring:1.0
     hostname: contact-address-stream-1
     container_name: contact-address-stream-1
     deploy:
@@ -354,10 +351,13 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-address-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
-      NUM_STREAM_THREADS: 2
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.contactaddress
       ROCKSDB_BLOCK_SIZE_KB: 4
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
@@ -370,16 +370,17 @@ services:
       STATE_TOPIC: source.state
     volumes:
       - ./volumes/contact-address-stream-1/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   contact-address-stream-2:
-    image: com.mycompany/contact-address-stream:1.0-SNAPSHOT
+    image: com.mycompany/contact-address-stream-spring:1.0
     hostname: contact-address-stream-2
     container_name: contact-address-stream-2
     deploy:
@@ -407,10 +408,13 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-address-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
-      NUM_STREAM_THREADS: 2
+      NUM_STREAM_THREADS: 1
       OUTPUT_TOPIC: canonical.contactaddress
       ROCKSDB_BLOCK_SIZE_KB: 4
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
@@ -423,16 +427,17 @@ services:
       STATE_TOPIC: source.state
     volumes:
       - ./volumes/contact-address-stream-2/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   contact-stream-1:
-    image: com.mycompany/contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/contact-stream-spring:1.0
     hostname: contact-stream-1
     container_name: contact-stream-1
     deploy:
@@ -460,6 +465,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -475,16 +483,17 @@ services:
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/contact-stream-1/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   contact-stream-2:
-    image: com.mycompany/contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/contact-stream-spring:1.0
     hostname: contact-stream-2
     container_name: contact-stream-2
     deploy:
@@ -512,6 +521,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -521,22 +533,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/contact-stream-2/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   contact-stream-3:
-    image: com.mycompany/contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/contact-stream-spring:1.0
     hostname: contact-stream-3
     container_name: contact-stream-3
     deploy:
@@ -564,6 +577,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -573,22 +589,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/contact-stream-3/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   contact-stream-4:
-    image: com.mycompany/contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/contact-stream-spring:1.0
     hostname: contact-stream-4
     container_name: contact-stream-4
     deploy:
@@ -616,6 +633,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -625,22 +645,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/contact-stream-4/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-contact-stream-1:
-    image: com.mycompany/account-contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-contact-stream-spring:1.0
     hostname: account-contact-stream-1
     container_name: account-contact-stream-1
     deploy:
@@ -669,6 +690,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -684,16 +708,17 @@ services:
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-contact-stream-1/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-contact-stream-2:
-    image: com.mycompany/account-contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-contact-stream-spring:1.0
     hostname: account-contact-stream-2
     container_name: account-contact-stream-2
     deploy:
@@ -722,6 +747,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -731,22 +759,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-contact-stream-2/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-contact-stream-3:
-    image: com.mycompany/account-contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-contact-stream-spring:1.0
     hostname: account-contact-stream-3
     container_name: account-contact-stream-3
     deploy:
@@ -775,6 +804,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -784,22 +816,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-contact-stream-3/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-contact-stream-4:
-    image: com.mycompany/account-contact-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-contact-stream-spring:1.0
     hostname: account-contact-stream-4
     container_name: account-contact-stream-4
     deploy:
@@ -828,6 +861,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-contact-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -837,22 +873,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-contact-stream-4/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-stream-1:
-    image: com.mycompany/account-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-stream-spring:1.0
     hostname: account-stream-1
     container_name: account-stream-1
     deploy:
@@ -880,6 +917,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -895,16 +935,17 @@ services:
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-stream-1/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-stream-2:
-    image: com.mycompany/account-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-stream-spring:1.0
     hostname: account-stream-2
     container_name: account-stream-2
     deploy:
@@ -932,6 +973,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -941,22 +985,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-stream-2/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-stream-3:
-    image: com.mycompany/account-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-stream-spring:1.0
     hostname: account-stream-3
     container_name: account-stream-3
     deploy:
@@ -984,6 +1029,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -993,22 +1041,23 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-stream-3/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
 
   account-stream-4:
-    image: com.mycompany/account-stream:1.0-SNAPSHOT
+    image: com.mycompany/account-stream-spring:1.0
     hostname: account-stream-4
     container_name: account-stream-4
     deploy:
@@ -1036,6 +1085,9 @@ services:
       FETCH_MAX_WAIT_MS: 500
       GROUP_ID: account-stream
       IN_MEMORY_STATE: false
+      JAVA_OPTS: >-
+        -Xms300M -Xmx300M
+        -javaagent:/agents/jmx_prometheus_javaagent-0.18.0.jar=9010:/jmx-exporter/kafka-streams.yml
       LD_PRELOAD: "/usr/lib/x86_64-linux-gnu/libjemalloc.so"
       LINGER_MS: 500
       METRICS_RECORDING_LEVEL: DEBUG
@@ -1045,16 +1097,17 @@ services:
       ROCKSDB_INDEX_FILTER_BLOCK_RATIO: 0.05
       ROCKSDB_MEMTABLE_INSTANCES: 3
       ROCKSDB_MEMTABLE_SIZE_MB: 16
-      ROCKSDB_BLOCKCACHE_MEMORY_MB: 100
+      ROCKSDB_BLOCKCACHE_MEMORY_MB: 150
       SCHEMA_URL: http://schema1:8081
       STATE_DIR: /data
       STATE_STORE_CLEANUP: false
     volumes:
       - ./volumes/account-stream-4/data:/data
+      - ./jmx-exporter:/jmx-exporter
     networks:
       - kafka-network
     healthcheck:
-      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/actuator/health | grep -e '\"status\":\"UP\"'"]
       interval: 2s
       timeout: 10s
       retries: 10
@@ -1098,7 +1151,7 @@ services:
       DOMAIN: ${DOMAIN}
     volumes:
       - ./volumes/prometheus:/prometheus
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus-spring.yml:/etc/prometheus/prometheus.yml
     networks:
       - kafka-network
 

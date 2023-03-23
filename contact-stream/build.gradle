@@ -9,13 +9,23 @@ application {
     mainClass = 'com.mycompany.kafka.streams.contact.Application'
 }
 
+tasks.named("dockerBuild") {
+    images = ["com.mycompany/contact-stream-jar:$project.version"]
+}
+
 tasks.named("dockerBuildNative") {
     images = ["com.mycompany/contact-stream:$project.version"]
 }
 
+tasks.named("dockerfile") {
+    baseImage('com.mycompany/debian:bookworm-slim')
+    args("--gc=G1", "-Xms300m", "-Xmx300m")
+    instruction """HEALTHCHECK CMD wget -q -O - http://localhost:8080/health | grep -e '"status":"UP"'"""
+}
+
 tasks.named("dockerfileNative") {
     baseImage('com.mycompany/debian:bookworm-slim')
-    args("--gc=G1", "-Xms500m", "-Xmx500m")
+    args("--gc=G1", "-Xms300m", "-Xmx300m")
     instruction """HEALTHCHECK CMD wget -q -O - http://localhost:8080/health | grep -e '"status":"UP"'"""
 }
 

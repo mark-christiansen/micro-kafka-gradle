@@ -807,35 +807,6 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"io.micronaut.http.hateoas.AbstractResource",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true
-},
-{
-  "name":"io.micronaut.http.hateoas.DefaultLink",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true
-},
-{
-  "name":"io.micronaut.http.hateoas.JsonError",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true
-},
-{
-  "name":"io.micronaut.http.hateoas.Link",
-  "queryAllDeclaredMethods":true
-},
-{
-  "name":"io.micronaut.http.hateoas.Link$Builder",
-  "queryAllDeclaredMethods":true
-},
-{
-  "name":"io.micronaut.http.hateoas.Resource",
-  "queryAllDeclaredMethods":true
-},
-{
   "name":"io.micronaut.http.netty.channel.$DefaultEventLoopGroupConfiguration$Definition$Reference",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },

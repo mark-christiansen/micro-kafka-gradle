@@ -23,12 +23,12 @@
       }
     ]
   },
-  "description": "Dashboard for a Kafka Streams application using Prometheus JMX-Exporter running in Kubernetes",
+  "description": "Dashboard for a Kafka Streams Spring applications using Prometheus JMX-Exporter",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 13966,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -117,7 +117,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(kafka_streams_application_id)",
+          "expr": "count(count by (application_id) (kafka_streams_stream_metrics{job=\"kafka-streams\", application_id!=\"\"}))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -185,7 +185,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(kafka_streams_task_created_total) - sum(kafka_streams_task_closed_total)",
+          "expr": "sum(kafka_streams_stream_thread_metrics_task_created_total) - sum(kafka_streams_stream_thread_metrics_task_closed_total)",
           "instant": false,
           "interval": "",
           "legendFormat": "Running Tasks",
@@ -321,7 +321,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "container_memory_usage_bytes{name=~\".*-stream-.*\"}/(1024*1024)",
+          "expr": "container_memory_usage_bytes{name=~\".*-stream-.*\"}",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -371,10 +371,6 @@
       "datasource": {
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
@@ -541,7 +537,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(kafka_streams_process_total{hostname=~\".*-stream-.*\"})",
+          "expr": "sum(kafka_streams_stream_thread_metrics_process_total{job=\"kafka-streams\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "Processed Records",
@@ -553,7 +549,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(kafka_streams_poll_total{hostname=~\".*-stream-.*\"})",
+          "expr": "sum(kafka_streams_stream_thread_metrics_poll_total{job=\"kafka-streams\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Polls",
@@ -566,7 +562,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(kafka_streams_commit_total{hostname=~\".*-stream-.*\"})",
+          "expr": "sum(kafka_streams_stream_thread_metrics_commit_total{job=\"kafka-streams\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Commits",
@@ -579,7 +575,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(kafka_streams_task_created_total{hostname=~\".*-stream-.*\"})",
+          "expr": "sum(kafka_streams_stream_thread_metrics_task_created_total{job=\"kafka-streams\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Created Tasks",
@@ -599,10 +595,6 @@
         "uid": "PBFA97CFB590B2093"
       },
       "description": "",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -644,7 +636,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "kafka_streams_records_lag_avg_records",
+          "expr": "label_replace(kafka_consumer_consumer_fetch_manager_metrics_records_lag_avg{job=\"kafka-streams\"}, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
           "legendFormat": "{{hostname}} -> {{topic}}",
           "range": true,
@@ -700,8 +692,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -741,7 +732,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "kafka_streams_process_total/1000",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_process_total{job=\"kafka-streams\"}/1000, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
           "legendFormat": "{{hostname}} ",
           "range": true,
@@ -807,9 +798,9 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(kafka_streams_record_e2e_latency_max)",
+          "expr": "label_replace(max(kafka_streams_stream_processor_node_metrics_record_e2e_latency_max >= 0) by (thead_id,hostname), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
-          "legendFormat": "Max Record E2E Latency",
+          "legendFormat": "{{hostname}} max",
           "range": true,
           "refId": "A"
         },
@@ -819,9 +810,9 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "min(kafka_streams_record_e2e_latency_min)",
+          "expr": "label_replace(min(kafka_streams_stream_processor_node_metrics_record_e2e_latency_min >= 0) by (thead_id,hostname), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
-          "legendFormat": "Min Record E2E Latency",
+          "legendFormat": "{{hostname}} min",
           "range": true,
           "refId": "B"
         }
@@ -914,28 +905,16 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "kafka_streams_poll_rate",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_poll_records_avg, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
           "legendFormat": "{{hostname}}",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "avg(kafka_streams_poll_records_avg)",
-          "interval": "",
-          "legendFormat": "Average",
           "range": true,
           "refId": "B"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Poll Records",
+      "title": "Poll Records Per Poll",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1021,28 +1000,16 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(kafka_streams_process_latency_max)",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_process_latency_avg, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
-          "legendFormat": "Max Process Latency",
+          "legendFormat": "{{hostname}}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "avg(kafka_streams_process_latency_avg)",
-          "interval": "",
-          "legendFormat": "Avg Process Latency",
-          "range": true,
-          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Process Latency",
+      "title": "Average Process Latency",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1080,10 +1047,6 @@
       "datasource": {
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1128,7 +1091,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "kafka_streams_process_rate",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_process_rate, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "range": true,
@@ -1225,28 +1188,16 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(kafka_streams_poll_latency_max)",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_poll_latency_avg, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
-          "legendFormat": "Max Thread Poll Latency",
+          "legendFormat": "{{hostname}}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "avg(kafka_streams_poll_latency_avg)",
-          "interval": "",
-          "legendFormat": "Avg Thread Poll Latency",
-          "range": true,
-          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Poll Latency",
+      "title": "Average Poll Latency",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1284,10 +1235,6 @@
       "datasource": {
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1332,7 +1279,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "kafka_streams_poll_rate",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_poll_rate, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "range": true,
@@ -1430,23 +1377,11 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(kafka_streams_commit_latency_max_seconds)",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_commit_latency_avg, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
-          "legendFormat": "Max Thread Commit Latency",
+          "legendFormat": "{{hostname}}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "avg(kafka_streams_commit_latency_avg_seconds)",
-          "interval": "",
-          "legendFormat": "Avg Thread Commit Latency",
-          "range": true,
-          "refId": "B"
         }
       ],
       "thresholds": [],
@@ -1540,7 +1475,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "kafka_streams_commit_rate_commits",
+          "expr": "label_replace(kafka_streams_stream_thread_metrics_commit_rate, \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "range": true,
@@ -1579,6 +1514,1054 @@
       "yaxis": {
         "align": false
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 65
+      },
+      "hiddenSeries": false,
+      "id": 61,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(sum(kafka_streams_stream_task_metrics_record_lateness_avg > 0) by (hostname), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Record Lateness (Out-Of-Order)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "none",
+          "label": "records",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 73
+      },
+      "id": 53,
+      "panels": [],
+      "title": "RocksDB",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 74
+      },
+      "hiddenSeries": false,
+      "id": 54,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(avg(kafka_streams_stream_state_metrics_get_rate) by (hostname), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Get Rate (ops/sec)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "none",
+          "label": "gets/sec",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 74
+      },
+      "hiddenSeries": false,
+      "id": 56,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(avg(kafka_streams_stream_state_metrics_get_latency_avg >= 0) by (hostname), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Get Avg Latency (ms)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "ms",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 82
+      },
+      "hiddenSeries": false,
+      "id": 55,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(avg(kafka_streams_stream_state_metrics_put_rate) by (hostname), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Put Rate (ops/sec)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "none",
+          "label": "puts/sec",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 82
+      },
+      "hiddenSeries": false,
+      "id": 57,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(avg(kafka_streams_stream_state_metrics_put_latency_avg >= 0) by (hostname), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Put Avg Latency (ms)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "ms",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 90
+      },
+      "hiddenSeries": false,
+      "id": 58,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(max(kafka_streams_stream_state_metrics_block_cache_capacity) by (hostname,rocksdb_state_id), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}} {{rocksdb_state_id}} Capacity",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(max(kafka_streams_stream_state_metrics_block_cache_usage) by (hostname,rocksdb_state_id), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "hide": false,
+          "legendFormat": "{{hostname}} {{rocksdb_state_id}} Used",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Block Cache Usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "decbytes",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 90
+      },
+      "hiddenSeries": false,
+      "id": 59,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(avg(kafka_streams_stream_record_cache_metrics_hit_ratio_avg >= 0) by (hostname,rocksdb_state_id), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Record Cache Hit Ratio",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 98
+      },
+      "hiddenSeries": false,
+      "id": 60,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(sum(kafka_streams_stream_state_metrics_size_all_mem_tables >= 0) by (hostname,rocksdb_state_id), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Total Size of All Memtables",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "decbytes",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 98
+      },
+      "hiddenSeries": false,
+      "id": 62,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(sum(kafka_streams_stream_state_metrics_live_sst_files_size >= 0) by (hostname,rocksdb_state_id), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Size of Live SST Files",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "decbytes",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 106
+      },
+      "hiddenSeries": false,
+      "id": 63,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(sum(kafka_streams_stream_state_metrics_estimate_table_readers_mem >= 0) by (hostname,rocksdb_state_id), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Memory for Reading SSTs (Excludes Block Cache)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "decbytes",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "decbytes",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 106
+      },
+      "hiddenSeries": false,
+      "id": 64,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "label_replace(sum(kafka_streams_stream_state_metrics_block_cache_pinned_usage >= 0) by (hostname,rocksdb_state_id), \"hostname\", \"$1\", \"hostname\", \"(.*).mycompany.com\")",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Memory for Entries Pinned in Block Cache",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:839",
+          "format": "decbytes",
+          "label": "",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:840",
+          "format": "decbytes",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
     }
   ],
   "refresh": "10s",
@@ -1595,7 +2578,7 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -1613,8 +2596,8 @@
     ]
   },
   "timezone": "",
-  "title": "Kafka Streams",
-  "uid": "_ZbXJQYMz",
-  "version": 19,
+  "title": "Kafka Streams Spring",
+  "uid": "_ZbXJQYMy",
+  "version": 2,
   "weekStart": ""
 }

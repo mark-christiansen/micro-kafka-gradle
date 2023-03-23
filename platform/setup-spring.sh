@@ -23,4 +23,4 @@ mkdir volumes/prometheus
 mkdir volumes/zoo-1
 
 echo "Starting Kafka environment"
-docker compose up -d
+docker compose -f docker-compose-spring.yml up -d

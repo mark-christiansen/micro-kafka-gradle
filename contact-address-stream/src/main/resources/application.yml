@@ -38,7 +38,6 @@ kafka:
     commit.interval.ms: ${COMMIT_INTERVAL_MS:30000}
     default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndFailExceptionHandler
     default.key.serde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
-    default.value.serde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
     default.production.exception.handler: org.apache.kafka.streams.errors.DefaultProductionExceptionHandler
     default.timestamp.extractor: org.apache.kafka.streams.processor.WallclockTimestampExtractor
     default.value.serde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
@@ -50,6 +49,7 @@ kafka:
     linger.ms: ${LINGER_MS:0}
     max.in.flight.requests.per.connection: ${MAX_IN_FLIGHT_REQUESTS:1}
     metric.reporters: "io.micronaut.configuration.kafka.streams.metrics.KafkaStreamsMetricsReporter"
+    metrics.recording.level: ${METRICS_RECORDING_LEVEL:INFO}
     min.insync.replicas: ${MIN_INSYNC_REPLICAS:0}
     num.standby.replicas: ${NUM_STANDBY_REPLICAS:0}
     num.stream.threads: ${NUM_STREAM_THREADS:1}
@@ -58,7 +58,12 @@ kafka:
     replication.factor: ${REPLICATION_FACTOR:-1}
     request.timeout.ms: ${REQUEST_TIMEOUT:60000}
     retries: ${RETRIES:2147483647}
+    rocksdb.block.size.kb: ${ROCKSDB_BLOCK_SIZE_KB:4}
     rocksdb.config.setter: "com.mycompany.kafka.streams.RocksDBConfig"
+    rocksdb.index.filter.block.ratio: ${ROCKSDB_INDEX_FILTER_BLOCK_RATIO:0}
+    rocksdb.memtable.instances: ${ROCKSDB_MEMTABLE_INSTANCES:3}
+    rocksdb.memtable.size.mb: ${ROCKSDB_MEMTABLE_SIZE_MB:16}
+    rocksdb.blockcache.memory.mb: ${ROCKSDB_BLOCKCACHE_MEMORY_MB:50}
     sasl.mechanism: ${SASL_MECHANISM:PLAIN}
     sasl.jaas.config: >-
       org.apache.kafka.common.security.plain.PlainLoginModule required

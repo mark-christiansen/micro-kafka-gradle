@@ -13,4 +13,5 @@ GROUP=$2
 export LOG_DIR="/tmp"
 export SCHEMA_REGISTRY_LOG4J_LOGGERS="org.apache.kafka.clients.consumer=OFF"
 
-kafka-avro-console-consumer --bootstrap-server $BROKER_URL --property schema.registry.url=$SCHEMA_URL --topic $TOPIC --group $GROUP --from-beginning
+kafka-avro-console-consumer --consumer.config $KAFKA_CONFIG --bootstrap-server $BOOTSTRAP_URL \
+--property schema.registry.url=$SCHEMA_URL --topic $TOPIC --group $GROUP --from-beginning

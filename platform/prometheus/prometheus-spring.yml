@@ -33,20 +33,20 @@ scrape_configs:
     metrics_path: "/prometheus"
     static_configs:
       - targets:
-          - account-contact-stream-1.mycompany.com:8080
-          - account-contact-stream-2.mycompany.com:8080
-          - account-contact-stream-3.mycompany.com:8080
-          - account-contact-stream-4.mycompany.com:8080
-          - account-stream-1.mycompany.com:8080
-          - account-stream-2.mycompany.com:8080
-          - account-stream-3.mycompany.com:8080
-          - account-stream-4.mycompany.com:8080
-          - contact-address-stream-1.mycompany.com:8080
-          - contact-address-stream-2.mycompany.com:8080
-          - contact-stream-1.mycompany.com:8080
-          - contact-stream-2.mycompany.com:8080
-          - contact-stream-3.mycompany.com:8080
-          - contact-stream-4.mycompany.com:8080
+          - account-contact-stream-1.mycompany.com:9010
+          - account-contact-stream-2.mycompany.com:9010
+          - account-contact-stream-3.mycompany.com:9010
+          - account-contact-stream-4.mycompany.com:9010
+          - account-stream-1.mycompany.com:9010
+          - account-stream-2.mycompany.com:9010
+          - account-stream-3.mycompany.com:9010
+          - account-stream-4.mycompany.com:9010
+          - contact-address-stream-1.mycompany.com:9010
+          - contact-address-stream-2.mycompany.com:9010
+          - contact-stream-1.mycompany.com:9010
+          - contact-stream-2.mycompany.com:9010
+          - contact-stream-3.mycompany.com:9010
+          - contact-stream-4.mycompany.com:9010
     relabel_configs:
       - source_labels: [__address__]
         target_label: hostname

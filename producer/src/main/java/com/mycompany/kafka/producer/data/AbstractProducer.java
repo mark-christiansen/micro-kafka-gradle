@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;
 
+import static java.lang.String.format;
+
 public abstract class AbstractProducer implements Callable<Boolean> {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractProducer.class);
@@ -55,13 +57,20 @@ public abstract class AbstractProducer implements Callable<Boolean> {
         try {
             while (count < messages) {
                 long currentBatch = count + batchSize < messages ? batchSize : messages - count;
-                generate(schema, count, (int) currentBatch);
-                for (GenericRecord record : records) {
-                    producer.send(new ProducerRecord<>(topicName, (Long) record.get(ID_FIELD), record));
+                try {
+
+                    generate(schema, count, (int) currentBatch);
+                    for (GenericRecord record : records) {
+                        producer.send(new ProducerRecord<>(topicName, (Long) record.get(ID_FIELD), record));
+                    }
+                    producer.flush();
+
+                    log.info("Produced {} messages", batchSize);
+                    count += batchSize;
+
+                } catch (Exception e) {
+                    log.error(format("Error occurred trying to produce %d messages, trying again", batchSize), e);
                 }
-                producer.flush();
-                log.info("Produced {} messages", batchSize);
-                count += batchSize;
                 records.clear();
                 try {
                     Thread.sleep(frequencyMs);

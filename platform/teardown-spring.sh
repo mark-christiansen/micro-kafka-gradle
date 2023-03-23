@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Stopping Kafka environment"
-docker compose down
+docker compose -f docker-compose-spring.yml down
 
 echo "Cleaning up volumes"
 find volumes/account-contact-stream-1 -mindepth 1 -delete

@@ -14,7 +14,7 @@ export LOG_DIR="/tmp"
 export SCHEMA_REGISTRY_LOG4J_LOGGERS="org.apache.kafka.clients.consumer=OFF"
 
 echo "| KEY | VALUE | HEADERS | SCHEMA_ID |"
-kafka-avro-console-consumer -bootstrap-server $BROKER_URL \
+kafka-avro-console-consumer --consumer.config $KAFKA_CONFIG --bootstrap-server $BOOTSTRAP_URL \
 --property print.schema.ids=true --property schema.id.separator=" | " \
 --property print.key=true --property key.separator=" | " --property key.deserializer=org.apache.kafka.common.serialization.LongDeserializer \
 --property schema.registry.url=$SCHEMA_URL --topic $TOPIC --group $GROUP --from-beginning

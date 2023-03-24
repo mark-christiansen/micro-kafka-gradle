@@ -263,64 +263,64 @@ services:
 
   ################## CLIENTS ##################
 
-#  producer:
-#    image: com.mycompany/kafka-producer:1.0-SNAPSHOT
-#    hostname: producer
-#    container_name: producer
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: "2.0"
-#          memory: "2G"
-#        reservations:
-#          cpus: "1.0"
-#          memory: "1G"
-#    links:
-#      - client
-#    depends_on:
-#      client:
-#        condition: service_healthy
-#    ports:
-#      - "8800:8080"
-#    environment:
-#      ACCOUNT_CONTACT_TOPIC: source.accountcontact
-#      ACCOUNT_TOPIC: source.account
-#      ACCOUNTS: 1000000
-#      ACKS: all
-#      ADDRESSES_PER_CONTACT: 1
-#      BATCH_SIZE: 500
-#      BOOTSTRAP_URL: kafka1.${DOMAIN}:29092,kafka2.${DOMAIN}:29092
-#      CANONICAL_ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
-#      CANONICAL_ACCOUNT_TOPIC: canonical.account
-#      CANONICAL_CONTACT_ADDRESS_TOPIC: canonical.contactaddress
-#      CANONICAL_CONTACT_TOPIC: canonical.contact
-#      CLIENT_ID: producer
-#      COMPRESSION_TYPE: lz4
-#      CONTACT_ADDRESS_TOPIC: source.contactaddress
-#      CONTACT_ROLE_TOPIC: source.contactrole
-#      CONTACT_TOPIC: source.contact
-#      CONTACTS_PER_ACCOUNT: 1
-#      COUNTRY_TOPIC: source.country
-#      ENABLE_IDEMPOTENCE: true
-#      FREQUENCY_MS: 100
-#      LINGER_MS: 100
-#      LOAD_SCHEMAS_FROM_CLASSPATH: false
-#      MAX_IN_FLIGHT_REQUESTS: 1
-#      MAX_REQUEST_SIZE: 100000
-#      PARTITIONS: 5
-#      SCHEMA_URL: http://schema1:8081
-#      SCHEMAS_PATH: /schemas
-#      STATE_TOPIC: source.state
-#      THREADS: 5
-#    volumes:
-#      - ./volumes/producer/schemas:/schemas
-#    networks:
-#      - kafka-network
-#    healthcheck:
-#      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
-#      interval: 2s
-#      timeout: 10s
-#      retries: 10
+  producer:
+    image: com.mycompany/kafka-producer:1.0-SNAPSHOT
+    hostname: producer
+    container_name: producer
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: "2G"
+        reservations:
+          cpus: "1.0"
+          memory: "1G"
+    links:
+      - client
+    depends_on:
+      client:
+        condition: service_healthy
+    ports:
+      - "8800:8080"
+    environment:
+      ACCOUNT_CONTACT_TOPIC: source.accountcontact
+      ACCOUNT_TOPIC: source.account
+      ACCOUNTS: 1000000
+      ACKS: all
+      ADDRESSES_PER_CONTACT: 1
+      BATCH_SIZE: 500
+      BOOTSTRAP_URL: kafka1.${DOMAIN}:29092,kafka2.${DOMAIN}:29092
+      CANONICAL_ACCOUNT_CONTACT_TOPIC: canonical.accountcontact
+      CANONICAL_ACCOUNT_TOPIC: canonical.account
+      CANONICAL_CONTACT_ADDRESS_TOPIC: canonical.contactaddress
+      CANONICAL_CONTACT_TOPIC: canonical.contact
+      CLIENT_ID: producer
+      COMPRESSION_TYPE: lz4
+      CONTACT_ADDRESS_TOPIC: source.contactaddress
+      CONTACT_ROLE_TOPIC: source.contactrole
+      CONTACT_TOPIC: source.contact
+      CONTACTS_PER_ACCOUNT: 1
+      COUNTRY_TOPIC: source.country
+      ENABLE_IDEMPOTENCE: true
+      FREQUENCY_MS: 100
+      LINGER_MS: 100
+      LOAD_SCHEMAS_FROM_CLASSPATH: false
+      MAX_IN_FLIGHT_REQUESTS: 1
+      MAX_REQUEST_SIZE: 100000
+      PARTITIONS: 5
+      SCHEMA_URL: http://schema1:8081
+      SCHEMAS_PATH: /schemas
+      STATE_TOPIC: source.state
+      THREADS: 5
+    volumes:
+      - ./volumes/producer/schemas:/schemas
+    networks:
+      - kafka-network
+    healthcheck:
+      test: ["CMD", "sh", "-c", "wget -q -O - http://localhost:8080/health | grep -e '\"status\":\"UP\"'"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   contact-address-stream-1:
     image: com.mycompany/contact-address-stream-spring:1.0
